@@ -3,9 +3,9 @@
 // import viteLogo from "/vite.svg";
 
 import "./App.css";
-import PopUser from "./components/PopUps/PopUser";
-import PopNewCard from "./components/PopUps/PopNewCard";
-import PopBrowse from "./components/PopUps/PopBrowse";
+import PopUser from "./components/PopUps/PopUser/PopUser";
+import PopNewCard from "./components/PopUps/PopNewCard/PopNewCard";
+import PopBrowse from "./components/PopUps/PopBrowse/PopBrowse";
 import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
 
