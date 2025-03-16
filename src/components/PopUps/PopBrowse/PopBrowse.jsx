@@ -1,8 +1,25 @@
+import React from "react";
 import Calendar from "../../Calendar/Calendar";
 
+export let openBrowseCardPopUp;
+
 const PopBrowse = () => {
+  const [popBrowseDisplay, changePopBrowseDisplay] = React.useState("none");
+
+  openBrowseCardPopUp = () => {
+    changePopBrowseDisplay("block");
+  };
+
+  const closeBrowseCardPopUp = () => {
+    changePopBrowseDisplay("none");
+  };
+
   return (
-    <div className="pop-browse" id="popBrowse">
+    <div
+      style={{ display: popBrowseDisplay }}
+      className="pop-browse"
+      id="popBrowse"
+    >
       <div className="pop-browse__container">
         <div className="pop-browse__block">
           <div className="pop-browse__content">
@@ -69,8 +86,11 @@ const PopBrowse = () => {
                   <a href="#">Удалить задачу</a>
                 </button>
               </div>
-              <button className="btn-browse__close _btn-bg _hover01">
-                <a href="#">Закрыть</a>
+              <button
+                onClick={closeBrowseCardPopUp}
+                className="btn-browse__close _btn-bg _hover01"
+              >
+                <a>Закрыть</a>
               </button>
             </div>
             <div className="pop-browse__btn-edit _hide">

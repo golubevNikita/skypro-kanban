@@ -1,13 +1,29 @@
-const CardsItem = (props) => {
+import { openBrowseCardPopUp } from "../PopUps/PopBrowse/PopBrowse";
+
+const CardsItem = ({ topic, title, date }) => {
+  let color;
+
+  switch (topic) {
+    case "Web Design":
+      color = "_orange";
+      break;
+    case "Research":
+      color = "_green";
+      break;
+    case "Copywriting":
+      color = "_purple";
+      break;
+  }
+
   return (
     <>
       <div className="cards__card card">
         <div className="card__group">
-          <div className={`card__theme ${props.color}`}>
-            <p className={props.color}>Research</p>
+          <div className={`card__theme ${color}`}>
+            <p className={color}>{topic}</p>
           </div>
           <a href="#popBrowse" target="_self">
-            <div className="card__btn">
+            <div onClick={openBrowseCardPopUp} className="card__btn">
               <div></div>
               <div></div>
               <div></div>
@@ -16,7 +32,7 @@ const CardsItem = (props) => {
         </div>
         <div className="card__content">
           <a href="" target="_blank">
-            <h3 className="card__title">Название задачи</h3>
+            <h3 className="card__title">{title}</h3>
           </a>
           <div className="card__date">
             <svg
@@ -47,7 +63,7 @@ const CardsItem = (props) => {
                 </clipPath>
               </defs>
             </svg>
-            <p>30.10.23</p>
+            <p>{date}</p>
           </div>
         </div>
       </div>
