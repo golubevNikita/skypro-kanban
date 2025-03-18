@@ -1,4 +1,4 @@
-const Calendar = (props) => {
+const Calendar = ({ date }) => {
   return (
     <div className="pop-new-card__calendar calendar">
       <p className="calendar__ttl subttl">Даты</p>
@@ -64,7 +64,7 @@ const Calendar = (props) => {
             <div className="calendar__cell _cell-day">19</div>
             <div className="calendar__cell _cell-day">20</div>
             <div className="calendar__cell _cell-day">21</div>
-            <div className="calendar__cell _cell-day">22</div>
+            <div className="calendar__cell _cell-day ">22</div>
             <div className="calendar__cell _cell-day _weekend">23</div>
             <div className="calendar__cell _cell-day _weekend">24</div>
             <div className="calendar__cell _cell-day">25</div>
@@ -79,10 +79,9 @@ const Calendar = (props) => {
 
         <input type="hidden" id="datepick_value" value="08.09.2023" />
         <div className="calendar__period">
-          {props.date ? (
+          {date ? (
             <p className="calendar__p date-end">
-              Срок исполнения:{" "}
-              <span className="date-control">{props.date}</span>
+              Срок исполнения: <span className="date-control">{date}</span>
             </p>
           ) : (
             <p className="calendar__p date-end">
@@ -94,5 +93,17 @@ const Calendar = (props) => {
     </div>
   );
 };
+
+const daysOfCalendar = document.querySelectorAll("._cell-day");
+
+for (const dayEl of daysOfCalendar) {
+  dayEl.addEventListener("click", () => {
+    daysOfCalendar.forEach((el) => {
+      el.classList.remove("_cell-day-active");
+    });
+
+    dayEl.classList.add("_cell-day-active");
+  });
+}
 
 export default Calendar;

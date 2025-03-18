@@ -1,13 +1,30 @@
+import React from "react";
 import Calendar from "../../Calendar/Calendar";
 
+export let openNewCardPopUp;
+
 const PopNewCard = () => {
+  const [newCardDisplay, changeNewCardDisplay] = React.useState("none");
+
+  openNewCardPopUp = () => {
+    changeNewCardDisplay("block");
+  };
+
+  const closeNewCardPopUp = () => {
+    changeNewCardDisplay("none");
+  };
+
   return (
-    <div className="pop-new-card" id="popNewCard">
+    <div
+      style={{ display: newCardDisplay }}
+      className="pop-new-card"
+      id="popNewCard"
+    >
       <div className="pop-new-card__container">
         <div className="pop-new-card__block">
           <div className="pop-new-card__content">
             <h3 className="pop-new-card__ttl">Создание задачи</h3>
-            <a href="#" className="pop-new-card__close">
+            <a onClick={closeNewCardPopUp} className="pop-new-card__close">
               &#10006;
             </a>
             <div className="pop-new-card__wrap">

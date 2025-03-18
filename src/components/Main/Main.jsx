@@ -1,5 +1,26 @@
 import CardsItem from "../Card/CardsItem";
 import Column from "../Column/Column";
+import { cardList } from "../../../data";
+
+function statusDefiner(array, status) {
+  let statusArray = [];
+  array.map((el) => {
+    if (el.status.toLowerCase() === status.toLowerCase()) {
+      statusArray.push(el);
+    }
+  });
+  return statusArray;
+}
+
+function propsOfComponent(array) {
+  const props = array.map((el) => {
+    return (
+      <CardsItem key={el.id} topic={el.topic} title={el.title} date={el.date} />
+    );
+  });
+
+  return props;
+}
 
 const Main = () => {
   return (
@@ -9,37 +30,37 @@ const Main = () => {
           <div className="main__content">
             <Column
               name="Без статуса"
-              componentsObject={[
-                <CardsItem color="_orange" />,
-                <CardsItem color="_green" />,
-                <CardsItem color="_orange" />,
-                <CardsItem color="_purple" />,
-                <CardsItem color="_orange" />,
-              ]}
+              componentsObject={propsOfComponent(
+                statusDefiner(cardList, "Без статуса")
+              )}
             />
 
             <Column
               name="Нужно сделать"
-              componentsObject={[<CardsItem color="_green" />]}
+              componentsObject={propsOfComponent(
+                statusDefiner(cardList, "Нужно сделать")
+              )}
             />
 
             <Column
               name="В работе"
-              componentsObject={[
-                <CardsItem color="_green" />,
-                <CardsItem color="_purple" />,
-                <CardsItem color="_orange" />,
-              ]}
+              componentsObject={propsOfComponent(
+                statusDefiner(cardList, "В работе")
+              )}
             />
 
             <Column
               name="Тестирование"
-              componentsObject={[<CardsItem color="_green" />]}
+              componentsObject={propsOfComponent(
+                statusDefiner(cardList, "Тестирование")
+              )}
             />
 
             <Column
               name="Готово"
-              componentsObject={[<CardsItem color="_green" />]}
+              componentsObject={propsOfComponent(
+                statusDefiner(cardList, "Готово")
+              )}
             />
           </div>
         </div>
