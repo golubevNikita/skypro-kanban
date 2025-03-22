@@ -1,40 +1,35 @@
 import { openBrowseCardPopUp } from "../PopUps/PopBrowse/PopBrowse";
+import {
+  CardsCard,
+  CardsGroup,
+  CardsTheme,
+  CardButton,
+  CardContent,
+  CardTitle,
+  CardDate,
+} from "./CardsItem.styled";
 
 const CardsItem = ({ topic, title, date }) => {
-  let color;
-
-  switch (topic) {
-    case "Web Design":
-      color = "_orange";
-      break;
-    case "Research":
-      color = "_green";
-      break;
-    case "Copywriting":
-      color = "_purple";
-      break;
-  }
-
   return (
     <>
-      <div className="cards__card card">
-        <div className="card__group">
-          <div className={`card__theme ${color}`}>
-            <p className={color}>{topic}</p>
-          </div>
+      <CardsCard>
+        <CardsGroup>
+          <CardsTheme color={topic}>
+            <p>{topic}</p>
+          </CardsTheme>
           <a href="#popBrowse" target="_self">
-            <div onClick={openBrowseCardPopUp} className="card__btn">
+            <CardButton onClick={openBrowseCardPopUp}>
               <div></div>
               <div></div>
               <div></div>
-            </div>
+            </CardButton>
           </a>
-        </div>
-        <div className="card__content">
+        </CardsGroup>
+        <CardContent>
           <a href="" target="_blank">
-            <h3 className="card__title">{title}</h3>
+            <CardTitle>{title}</CardTitle>
           </a>
-          <div className="card__date">
+          <CardDate>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="13"
@@ -64,9 +59,9 @@ const CardsItem = ({ topic, title, date }) => {
               </defs>
             </svg>
             <p>{date}</p>
-          </div>
-        </div>
-      </div>
+          </CardDate>
+        </CardContent>
+      </CardsCard>
     </>
   );
 };

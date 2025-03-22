@@ -1,6 +1,7 @@
 import CardsItem from "../Card/CardsItem";
 import Column from "../Column/Column";
 import { cardList } from "../../../data";
+import { StyledMain, Container, MainBlock, MainContent } from "./Main.styled";
 
 function statusDefiner(array, status) {
   let statusArray = [];
@@ -24,10 +25,10 @@ function propsOfComponent(array) {
 
 const Main = () => {
   return (
-    <main className="main">
-      <div className="container">
-        <div className="main__block">
-          <div className="main__content">
+    <StyledMain>
+      <Container>
+        <MainBlock>
+          <MainContent>
             <Column
               name="Без статуса"
               componentsObject={propsOfComponent(
@@ -62,10 +63,10 @@ const Main = () => {
                 statusDefiner(cardList, "Готово")
               )}
             />
-          </div>
-        </div>
-      </div>
-    </main>
+          </MainContent>
+        </MainBlock>
+      </Container>
+    </StyledMain>
   );
 };
 
