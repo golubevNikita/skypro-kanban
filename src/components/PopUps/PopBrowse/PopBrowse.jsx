@@ -1,25 +1,22 @@
 import React from "react";
 import Calendar from "../../Calendar/Calendar";
+import { BrowsePopUp } from "./PopBrowse.styled";
 
 export let openBrowseCardPopUp;
 
 const PopBrowse = () => {
-  const [popBrowseDisplay, changePopBrowseDisplay] = React.useState("none");
+  const [popBrowseDisplay, setPopBrowseDisplay] = React.useState(false);
 
   openBrowseCardPopUp = () => {
-    changePopBrowseDisplay("block");
+    setPopBrowseDisplay(true);
   };
 
   const closeBrowseCardPopUp = () => {
-    changePopBrowseDisplay("none");
+    setPopBrowseDisplay(false);
   };
 
-  return (
-    <div
-      style={{ display: popBrowseDisplay }}
-      className="pop-browse"
-      id="popBrowse"
-    >
+  return popBrowseDisplay ? (
+    <BrowsePopUp id="popBrowse">
       <div className="pop-browse__container">
         <div className="pop-browse__block">
           <div className="pop-browse__content">
@@ -115,7 +112,9 @@ const PopBrowse = () => {
           </div>
         </div>
       </div>
-    </div>
+    </BrowsePopUp>
+  ) : (
+    ""
   );
 };
 

@@ -1,32 +1,36 @@
 import React from "react";
 import Calendar from "../../Calendar/Calendar";
+import {
+  PopUpNewCard,
+  PopUpNewCardContainer,
+  PopUpNewCardBlock,
+  PopUpNewCardContent,
+  PopUpNewCardTitle,
+  PopUpNewCardClose,
+} from "./PopNewCard.styled";
 
 export let openNewCardPopUp;
 
 const PopNewCard = () => {
-  const [newCardDisplay, changeNewCardDisplay] = React.useState("none");
+  const [newCardDisplay, setNewCardDisplay] = React.useState(false);
 
   openNewCardPopUp = () => {
-    changeNewCardDisplay("block");
+    setNewCardDisplay(true);
   };
 
   const closeNewCardPopUp = () => {
-    changeNewCardDisplay("none");
+    setNewCardDisplay(false);
   };
 
-  return (
-    <div
-      style={{ display: newCardDisplay }}
-      className="pop-new-card"
-      id="popNewCard"
-    >
-      <div className="pop-new-card__container">
-        <div className="pop-new-card__block">
-          <div className="pop-new-card__content">
-            <h3 className="pop-new-card__ttl">Создание задачи</h3>
-            <a onClick={closeNewCardPopUp} className="pop-new-card__close">
+  return newCardDisplay ? (
+    <PopUpNewCard id="popNewCard">
+      <PopUpNewCardContainer>
+        <PopUpNewCardBlock>
+          <PopUpNewCardContent>
+            <PopUpNewCardTitle>Создание задачи</PopUpNewCardTitle>
+            <PopUpNewCardClose onClick={closeNewCardPopUp}>
               &#10006;
-            </a>
+            </PopUpNewCardClose>
             <div className="pop-new-card__wrap">
               <form
                 className="pop-new-card__form form-new"
@@ -78,10 +82,12 @@ const PopNewCard = () => {
             <button className="form-new__create _hover01" id="btnCreate">
               Создать задачу
             </button>
-          </div>
-        </div>
-      </div>
-    </div>
+          </PopUpNewCardContent>
+        </PopUpNewCardBlock>
+      </PopUpNewCardContainer>
+    </PopUpNewCard>
+  ) : (
+    ""
   );
 };
 

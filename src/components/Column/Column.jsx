@@ -1,13 +1,17 @@
 import React, { useEffect } from "react";
 import { mainApiReguest } from "../../../mainApi";
+import {
+  CardsItem,
+  MainColumn,
+  ColumnTitle,
+  Cards,
+  LoadingPage,
+  LoadingPageLoader,
+} from "./Column.styled";
 
 const Column = ({ name, componentsObject }) => {
   const components = componentsObject.map((el) => {
-    return (
-      <div className="cards__item" key={el.key}>
-        {el}
-      </div>
-    );
+    return <CardsItem key={el.key}>{el}</CardsItem>;
   });
 
   // useEffect(() => {
@@ -30,26 +34,26 @@ const Column = ({ name, componentsObject }) => {
 
   return (
     <>
-      <div className="main__column">
-        <div className="column__title">
+      <MainColumn>
+        <ColumnTitle>
           <p>{name}</p>
-        </div>
+        </ColumnTitle>
 
         {loading ? (
-          <div className="cards" style={{ justifyContent: "center" }}>
-            <div className="loading-page">
-              <h3 className="loading-page__animation">Данные загружаются</h3>
-              <div className="loading-page__loader">
+          <Cards style={{ justifyContent: "center" }}>
+            <LoadingPage>
+              <h3>Данные загружаются</h3>
+              <LoadingPageLoader>
                 <div></div>
                 <div></div>
                 <div></div>
-              </div>
-            </div>
-          </div>
+              </LoadingPageLoader>
+            </LoadingPage>
+          </Cards>
         ) : (
-          <div className="cards">{components}</div>
+          <Cards>{components}</Cards>
         )}
-      </div>
+      </MainColumn>
     </>
   );
 };
