@@ -1,4 +1,24 @@
+import { useEffect } from "react";
+// import { useRef } from "react";
+
 const Calendar = ({ date }) => {
+  useEffect(() => {
+    // const element = refDaysOfCalendar.current;
+    // console.log(element);
+
+    const daysClasses = document.querySelectorAll("._cell-day");
+
+    for (const dayEl of daysClasses) {
+      dayEl.addEventListener("click", () => {
+        daysClasses.forEach((el) => {
+          el.classList.remove("_cell-day-active");
+        });
+
+        dayEl.classList.add("_cell-day-active");
+      });
+    }
+  }, []);
+
   return (
     <div className="pop-new-card__calendar calendar">
       <p className="calendar__ttl subttl">Даты</p>
@@ -93,17 +113,5 @@ const Calendar = ({ date }) => {
     </div>
   );
 };
-
-const daysOfCalendar = document.querySelectorAll("._cell-day");
-
-for (const dayEl of daysOfCalendar) {
-  dayEl.addEventListener("click", () => {
-    daysOfCalendar.forEach((el) => {
-      el.classList.remove("_cell-day-active");
-    });
-
-    dayEl.classList.add("_cell-day-active");
-  });
-}
 
 export default Calendar;

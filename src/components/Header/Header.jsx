@@ -1,4 +1,7 @@
 import React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { openNewCardPopUp } from "../PopUps/PopNewCard/PopNewCard";
 import { Container } from "../Main/Main.styled";
 
@@ -19,15 +22,31 @@ import {
 const Header = () => {
   const [userPopUpDisplay, setUserPopUpDisplay] = React.useState(false);
 
-  const openUserPopUp = () => {
-    setUserPopUpDisplay(true);
+  const toggleUserPopUp = () => {
+    setUserPopUpDisplay(!userPopUpDisplay);
   };
 
-  const closeUserPopUp = () => {
-    setUserPopUpDisplay(false);
+  const navigate = useNavigate();
+
+  const exitButton = (event) => {
+    event.preventDefault();
+    localStorage.removeItem("localUser");
+    navigate("/sign-in");
   };
 
-  const theme = "light";
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    if (theme === "dark") {
+      setTheme("light");
+    } else {
+      setTheme("dark");
+    }
+  };
+
+  const userName = JSON.parse(localStorage.getItem("localUser")).name;
+  const userMail =
+    JSON.parse(localStorage.getItem("localUser")).login + "@gmail.com";
 
   return (
     <>
@@ -51,18 +70,22 @@ const Header = () => {
               <HeaderButtonNew onClick={openNewCardPopUp} id="btnMainNew">
                 <a>Создать новую задачу</a>
               </HeaderButtonNew>
-              <HeaderUser onClick={openUserPopUp}>Ivan Ivanov</HeaderUser>
+              <HeaderUser onClick={toggleUserPopUp}>{userName}</HeaderUser>
 
               {userPopUpDisplay ? (
                 <HeaderUserPop>
-                  <HeaderUserClose onClick={closeUserPopUp}>x</HeaderUserClose>
-                  <HeaderUserName>Ivan Ivanov</HeaderUserName>
-                  <HeaderUserMail>ivan.ivanov@gmail.com</HeaderUserMail>
+                  <HeaderUserClose onClick={toggleUserPopUp}>x</HeaderUserClose>
+                  <HeaderUserName>{userName}</HeaderUserName>
+                  <HeaderUserMail>{userMail}</HeaderUserMail>
                   <HeaderUserTheme>
-                    <p>Темная тема</p>
-                    <input type="checkbox" name="checkbox" />
+                    <p>{theme === "light" ? "Светлая тема" : "Тёмная тема"}</p>
+                    <input
+                      onChange={toggleTheme}
+                      type="checkbox"
+                      name="checkbox"
+                    />
                   </HeaderUserTheme>
-                  <button type="button">
+                  <button type="button" onClick={exitButton}>
                     <a href="#popExit">Выйти</a>
                   </button>
                 </HeaderUserPop>

@@ -1,5 +1,3 @@
-import React, { useEffect } from "react";
-import { mainApiReguest } from "../../../mainApi";
 import {
   CardsItem,
   MainColumn,
@@ -9,28 +7,14 @@ import {
   LoadingPageLoader,
 } from "./Column.styled";
 
-const Column = ({ name, componentsObject }) => {
+const Column = ({ name, loading, componentsObject }) => {
   const components = componentsObject.map((el) => {
-    return <CardsItem key={el.key}>{el}</CardsItem>;
+    return (
+      <CardsItem id={el.key} key={el.key}>
+        {el}
+      </CardsItem>
+    );
   });
-
-  // useEffect(() => {
-  //   setTimeout(
-  //     () => {
-  //       pageContent(false);
-  //     },
-
-  //     2000
-  //   );
-  // }, []);
-
-  const [loading, pageContent] = React.useState(true);
-
-  useEffect(() => {
-    mainApiReguest(() => {
-      pageContent(false);
-    }, 2000);
-  }, []);
 
   return (
     <>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { colorDefiner, backgroundColorDefiner } from "../../services/utilities";
 
 export const CardsCard = styled.div`
   padding: 2em;
@@ -42,25 +43,11 @@ export const CardsTheme = styled.div`
   border-radius: 18px;
 
   background-color: ${function (props) {
-    switch (props.color) {
-      case "Web Design":
-        return "#ffe4c2";
-      case "Research":
-        return "#b4fdd1";
-      case "Copywriting":
-        return "#e9d4ff";
-    }
+    return backgroundColorDefiner(props.color);
   }};
 
   color: ${function (props) {
-    switch (props.color) {
-      case "Web Design":
-        return "#ff6d00";
-      case "Research":
-        return "#06b16e";
-      case "Copywriting":
-        return "#9a48f1";
-    }
+    return colorDefiner(props.color);
   }};
 
   p {
@@ -69,14 +56,7 @@ export const CardsTheme = styled.div`
     line-height: 10px;
 
     color: ${function (props) {
-      switch (props.color) {
-        case "Web Design":
-          return "#ff6d00";
-        case "Research":
-          return "#06b16e";
-        case "Copywriting":
-          return "#9a48f1";
-      }
+      return colorDefiner(props.color);
     }};
   }
 `;
