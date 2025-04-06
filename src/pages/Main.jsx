@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import PopUser from "../components/PopUps/PopUser/PopUser";
 import PopNewCard from "../components/PopUps/PopNewCard/PopNewCard";
@@ -9,9 +9,39 @@ import Main from "../components/Main/Main";
 // import { GlobalStyle } from "./Main.styled";
 import { Wrapper } from "./Main.styled";
 
+import { getTasks } from "../services/getTasksApi";
 import { getTask } from "../services/tasksHandler";
 
-const MainPage = ({ renderFunction, error, cardList, loading }) => {
+const MainPage = () => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [cardList, setCardList] = useState([]);
+
+  const getCardList = useCallback(async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("localUser")).token;
+      setLoading(true);
+
+      getTasks(token).then((response) => {
+        if (response.name === "AxiosError") {
+          setError(response.response.data.error);
+          console.log(error);
+        } else {
+          setCardList(response.data.tasks);
+        }
+      });
+    } catch (error) {
+      console.log(error.response.data.error);
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    getCardList();
+  }, [getCardList]);
+
   const [taskId, setTaskId] = useState("");
   // const [isPopUser, setIsPopUser] = useState(false);
   // const [isPopNewCard, setIsPopNewCard] = useState(false);
@@ -43,12 +73,12 @@ const MainPage = ({ renderFunction, error, cardList, loading }) => {
         />
         <PopNewCard
           // isOpen={isPopNewCard}
-          renderFunction={renderFunction}
+          renderFunction={setCardList}
         />
         <PopBrowse
           isOpen={isPopBrowse}
           taskId={taskId}
-          renderFunction={renderFunction}
+          renderFunction={setCardList}
         />
 
         <Header />
