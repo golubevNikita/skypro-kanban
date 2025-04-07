@@ -16,7 +16,7 @@ import {
   ModalFormFooter,
 } from "./AuthorisationForm.styled";
 
-const AuthorisationForm = ({ isSignUp }) => {
+const AuthorisationForm = ({ setIsToken, isSignUp }) => {
   const [inputData, setInputData] = useState({
     name: "",
     login: "",
@@ -63,6 +63,7 @@ const AuthorisationForm = ({ isSignUp }) => {
         console.log(error);
       } else {
         localStorage.setItem("localUser", JSON.stringify(response));
+        setIsToken(true);
         navigate("/");
       }
     });

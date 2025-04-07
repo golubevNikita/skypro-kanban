@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
+import { Outlet } from "react-router-dom";
 
-import PopUser from "../components/PopUps/PopUser/PopUser";
 import PopNewCard from "../components/PopUps/PopNewCard/PopNewCard";
 import PopBrowse from "../components/PopUps/PopBrowse/PopBrowse";
 import Header from "../components/Header/Header";
@@ -12,15 +12,15 @@ import { Wrapper } from "./Main.styled";
 import { getTasks } from "../services/getTasksApi";
 import { getTask } from "../services/tasksHandler";
 
-const MainPage = () => {
+const MainPage = ({ setIsToken }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [cardList, setCardList] = useState([]);
 
   const getCardList = useCallback(async () => {
     try {
-      const token = JSON.parse(localStorage.getItem("localUser")).token;
       setLoading(true);
+      const token = JSON.parse(localStorage.getItem("localUser")).token;
 
       getTasks(token).then((response) => {
         if (response.name === "AxiosError") {
@@ -28,6 +28,8 @@ const MainPage = () => {
           console.log(error);
         } else {
           setCardList(response.data.tasks);
+          setIsToken(true);
+          setLoading(false);
         }
       });
     } catch (error) {
@@ -67,10 +69,6 @@ const MainPage = () => {
     <>
       {/* <GlobalStyle /> */}
       <Wrapper>
-        <PopUser
-          // isOpen={isPopUser}
-          toggleFunction={togglePopBrowse}
-        />
         <PopNewCard
           // isOpen={isPopNewCard}
           renderFunction={setCardList}
@@ -89,6 +87,7 @@ const MainPage = () => {
           taskIdDefiner={getTaskId}
           toggleFunction={togglePopBrowse}
         />
+        <Outlet />
       </Wrapper>
 
       <script src="js/script.js"></script>

@@ -1,6 +1,5 @@
-import React from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { openNewCardPopUp } from "../PopUps/PopNewCard/PopNewCard";
 import { Container } from "../Main/Main.styled";
@@ -20,18 +19,10 @@ import {
 } from "./Header.styled";
 
 const Header = () => {
-  const [userPopUpDisplay, setUserPopUpDisplay] = React.useState(false);
+  const [userPopUpDisplay, setUserPopUpDisplay] = useState(false);
 
   const toggleUserPopUp = () => {
     setUserPopUpDisplay(!userPopUpDisplay);
-  };
-
-  const navigate = useNavigate();
-
-  const exitButton = (event) => {
-    event.preventDefault();
-    localStorage.removeItem("localUser");
-    navigate("/sign-in");
   };
 
   const [theme, setTheme] = useState("light");
@@ -85,8 +76,8 @@ const Header = () => {
                       name="checkbox"
                     />
                   </HeaderUserTheme>
-                  <button type="button" onClick={exitButton}>
-                    <a href="#popExit">Выйти</a>
+                  <button type="button">
+                    <Link to={"/user"}>Выйти</Link>
                   </button>
                 </HeaderUserPop>
               ) : (
