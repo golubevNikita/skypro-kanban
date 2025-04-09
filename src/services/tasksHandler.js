@@ -17,6 +17,21 @@ export async function getTask({ taskId, token }) {
   }
 }
 
+export async function getTasks(token) {
+  try {
+    const data = await axios.get(url, {
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "",
+      },
+    });
+
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
+
 export async function taskDelete({ deletedTaskId, token }) {
   try {
     const data = await axios.delete(url + "/" + deletedTaskId, {

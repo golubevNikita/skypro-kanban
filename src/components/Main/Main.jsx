@@ -12,7 +12,7 @@ function propsOfComponent(array, taskIdDefiner) {
         title={el.title}
         date={correctedData(el.date)}
         description={el.description}
-        getId={taskIdDefiner}
+        getTask={taskIdDefiner}
       />
     );
   });
@@ -20,7 +20,7 @@ function propsOfComponent(array, taskIdDefiner) {
   return props;
 }
 
-const Main = ({ error, cardList, loading, taskIdDefiner }) => {
+const Main = ({ taskIdDefiner, cardList, loading, error }) => {
   return (
     <StyledMain>
       <Container>

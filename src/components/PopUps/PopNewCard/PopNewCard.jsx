@@ -1,6 +1,9 @@
-// import { useRef } from "react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { taskAdd } from "../../../services/tasksHandler";
+
 import Calendar from "../../Calendar/Calendar";
+
 import {
   PopUpNewCard,
   PopUpNewCardContainer,
@@ -9,24 +12,10 @@ import {
   PopUpNewCardTitle,
   PopUpNewCardClose,
 } from "./PopNewCard.styled";
-import { taskAdd } from "../../../services/tasksHandler";
 
-export let openNewCardPopUp;
-
-const PopNewCard = ({ renderFunction }) => {
-  const [newCardDisplay, setNewCardDisplay] = useState(false);
+const PopNewCard = ({ setCardList }) => {
   const token = JSON.parse(localStorage.getItem("localUser")).token;
-
-  openNewCardPopUp = () => {
-    setNewCardDisplay(true);
-  };
-
-  const closeNewCardPopUp = () => {
-    setNewCardDisplay(false);
-  };
-
-  // const newTaskData = useRef({});
-  // console.log(newTaskData);
+  const navigate = useNavigate();
 
   const [newTaskInfo, setNewTaskInfo] = useState({
     // title: "",
@@ -63,9 +52,9 @@ const PopNewCard = ({ renderFunction }) => {
         themeEl.classList.add("_active-category");
       });
     }
-  }, [newCardDisplay]);
+  }, []);
 
-  return newCardDisplay ? (
+  return (
     <PopUpNewCard id="popNewCard">
       <PopUpNewCardContainer>
         <PopUpNewCardBlock>
@@ -74,7 +63,7 @@ const PopNewCard = ({ renderFunction }) => {
             <PopUpNewCardClose
               onClick={() => {
                 setNewTaskInfo({});
-                closeNewCardPopUp();
+                navigate("/");
               }}
             >
               &#10006;
@@ -141,8 +130,8 @@ const PopNewCard = ({ renderFunction }) => {
             <button
               onClick={() => {
                 taskAdd({ newTaskInfo, token }).then((response) => {
-                  renderFunction(response.data.tasks);
-                  closeNewCardPopUp();
+                  setCardList(response.data.tasks);
+                  navigate("/");
                 });
               }}
               className="form-new__create _hover01"
@@ -154,8 +143,6 @@ const PopNewCard = ({ renderFunction }) => {
         </PopUpNewCardBlock>
       </PopUpNewCardContainer>
     </PopUpNewCard>
-  ) : (
-    ""
   );
 };
 

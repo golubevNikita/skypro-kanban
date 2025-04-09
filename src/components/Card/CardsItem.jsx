@@ -1,4 +1,4 @@
-import { openBrowseCardPopUp } from "../PopUps/PopBrowse/PopBrowse";
+import { useNavigate } from "react-router-dom";
 import {
   CardsCard,
   CardsGroup,
@@ -9,8 +9,9 @@ import {
   CardDate,
 } from "./CardsItem.styled";
 
-const CardsItem = ({ topic, title, date, descriprion, getId }) => {
+const CardsItem = ({ topic, title, date, descriprion, getTask }) => {
   const token = JSON.parse(localStorage.getItem("localUser")).token;
+  const navigate = useNavigate();
 
   return (
     <>
@@ -19,14 +20,14 @@ const CardsItem = ({ topic, title, date, descriprion, getId }) => {
           <CardsTheme color={topic}>
             <p>{topic}</p>
           </CardsTheme>
-          <a href="#popBrowse" target="_self">
+          <a target="_self">
             <CardButton
               onClick={(event) => {
                 event.stopPropagation;
                 event.preventDefault;
                 const taskId = event.currentTarget.closest("[id]").id;
-                getId({ taskId, token });
-                openBrowseCardPopUp();
+                getTask({ taskId, token });
+                navigate("/task-browse/" + taskId);
               }}
             >
               <div></div>

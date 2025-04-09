@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-// import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Calendar from "../../Calendar/Calendar";
 import { BrowsePopUp, CategoriesTheme, StatusTheme } from "./PopBrowse.styled";
-// import { getTask } from "../../../services/tasksHandler";
-import { taskDelete } from "../../../services/tasksHandler";
+import { taskDelete, taskChange } from "../../../services/tasksHandler";
 import { correctedData } from "../../../services/utilities";
-import { taskChange } from "../../../services/tasksHandler";
 
-export let openBrowseCardPopUp;
+const PopBrowse = ({ setCardList, taskId }) => {
+  const token = JSON.parse(localStorage.getItem("localUser")).token;
 
-const PopBrowse = ({ taskId, renderFunction }) => {
-  const [popBrowseDisplay, setPopBrowseDisplay] = useState(false);
+  const navigate = useNavigate();
+
   const [isRedacted, setRedacted] = useState(true);
   const [defaultTextAreaValue, setDefaultTextAreaValue] = useState(
     taskId.description
@@ -22,45 +22,6 @@ const PopBrowse = ({ taskId, renderFunction }) => {
 
   // const currentTaskInfo = { ...taskId };
   const [taskInfo, setTaskInfo] = useState({ ...taskId });
-
-  // const [task, setTask] = useState("asd");
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState("");
-  const token = JSON.parse(localStorage.getItem("localUser")).token;
-
-  // const getTaskInfo = useCallback(async () => {
-  //   try {
-  //     setLoading(true);
-  //     const data = getTask({ taskId, token });
-
-  //     data.then((response) => {
-  //       if (response.name === "AxiosError") {
-  //         setError(response.response.data.error);
-  //         // console.log(response.response.data.error);
-  //       } else {
-  //         setTask(response.data.task);
-  //         return task;
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.log(error.response.data.error);
-  //     setError(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   getTaskInfo();
-  // }, [getTaskInfo]);
-
-  openBrowseCardPopUp = () => {
-    setPopBrowseDisplay(true);
-  };
-
-  const closeBrowseCardPopUp = () => {
-    setPopBrowseDisplay(false);
-  };
 
   const toggleRedacted = () => {
     setRedacted(!isRedacted);
@@ -123,7 +84,7 @@ const PopBrowse = ({ taskId, renderFunction }) => {
     }
   }, [isRedacted]);
 
-  return popBrowseDisplay ? (
+  return (
     <BrowsePopUp id="popBrowse">
       <div className="pop-browse__container">
         <div className="pop-browse__block">
@@ -302,8 +263,8 @@ const PopBrowse = ({ taskId, renderFunction }) => {
                       const deletedTaskId = taskId["_id"];
 
                       taskDelete({ deletedTaskId, token }).then((response) => {
-                        renderFunction(response.data.tasks);
-                        closeBrowseCardPopUp();
+                        setCardList(response.data.tasks);
+                        navigate("/");
                       });
                     }}
                   >
@@ -313,7 +274,7 @@ const PopBrowse = ({ taskId, renderFunction }) => {
                 <button
                   onClick={() => {
                     setDefaultTextAreaValue(taskId.description);
-                    closeBrowseCardPopUp();
+                    navigate("/");
                   }}
                   className="btn-browse__close _btn-bg _hover01"
                 >
@@ -330,9 +291,9 @@ const PopBrowse = ({ taskId, renderFunction }) => {
 
                       taskChange({ changedTaskId, newData, token }).then(
                         (response) => {
-                          renderFunction(response.data.tasks);
+                          setCardList(response.data.tasks);
                           toggleRedacted();
-                          closeBrowseCardPopUp();
+                          navigate("/");
                         }
                       );
                     }}
@@ -361,7 +322,7 @@ const PopBrowse = ({ taskId, renderFunction }) => {
                   onClick={() => {
                     setTaskInfo({ ...taskId });
                     toggleRedacted();
-                    closeBrowseCardPopUp();
+                    navigate("/");
                   }}
                   className="btn-edit__close _btn-bg _hover01"
                 >
@@ -373,8 +334,6 @@ const PopBrowse = ({ taskId, renderFunction }) => {
         </div>
       </div>
     </BrowsePopUp>
-  ) : (
-    ""
   );
 };
 
