@@ -9,7 +9,9 @@ import {
   CardDate,
 } from "./CardsItem.styled";
 
-const CardsItem = ({ topic, title, date }) => {
+const CardsItem = ({ topic, title, date, descriprion, getId }) => {
+  const token = JSON.parse(localStorage.getItem("localUser")).token;
+
   return (
     <>
       <CardsCard>
@@ -18,7 +20,15 @@ const CardsItem = ({ topic, title, date }) => {
             <p>{topic}</p>
           </CardsTheme>
           <a href="#popBrowse" target="_self">
-            <CardButton onClick={openBrowseCardPopUp}>
+            <CardButton
+              onClick={(event) => {
+                event.stopPropagation;
+                event.preventDefault;
+                const taskId = event.currentTarget.closest("[id]").id;
+                getId({ taskId, token });
+                openBrowseCardPopUp();
+              }}
+            >
               <div></div>
               <div></div>
               <div></div>

@@ -81,8 +81,8 @@ ul li {
 
 html,
 body {
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
   font-family: "Roboto", Arial, Helvetica, sans-serif;
   color: #000000;
 }
@@ -125,7 +125,7 @@ body {
   color: #ffffff;
 } */
 
-/* ._orange {
+._orange {
   background-color: #ffe4c2;
   color: #ff6d00;
 }
@@ -138,7 +138,7 @@ body {
 ._purple {
   background-color: #e9d4ff;
   color: #9a48f1;
-} */
+}
 
 ._gray {
   background: #94a6be;
@@ -156,7 +156,7 @@ body {
 }
 
 .pop-exit {
-  display: none;
+  /* display: none; */
   width: 100%;
   height: 100%;
   min-width: 320px;
@@ -592,6 +592,7 @@ body {
   border-radius: 24px;
   margin-right: 7px;
   opacity: 0.4;
+  cursor: pointer;
 }
 .categories__theme p {
   font-size: 14px;
@@ -639,10 +640,10 @@ body {
   text-align: left;
 }
 .pop-browse__content .categories__theme {
-  opacity: 1;
+  /* opacity: 1; */
 }
 .pop-browse__content .theme-down {
-  display: none;
+  /* display: none; */
   margin-bottom: 20px;
 }
 .pop-browse__content .theme-top {
@@ -734,6 +735,7 @@ body {
   align-items: flex-start;
   justify-content: flex-start;
 }
+
 .status__theme {
   border-radius: 24px;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
@@ -741,6 +743,7 @@ body {
   padding: 11px 14px 10px;
   margin-right: 7px;
   margin-bottom: 7px;
+  cursor: pointer;
 }
 .status__theme p {
   font-size: 14px;

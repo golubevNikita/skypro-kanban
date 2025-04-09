@@ -1,15 +1,16 @@
 import createGlobalStyle from "styled-components";
+import styled from "styled-components";
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
 
-    &:before,
-    &:after {
-      box-sizing: border-box;
-    }
+  *:before,
+  *:after {
+    box-sizing: border-box;
   }
 
   a,
@@ -48,4 +49,10 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export default GlobalStyle;
+export const Wrapper = styled.div`
+  max-width: 100%;
+  width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #f1f1f1;
+`;
