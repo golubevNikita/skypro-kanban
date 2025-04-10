@@ -1,5 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { TasksContext } from "../../TasksContext";
+
 import { taskAdd } from "../../../services/tasksHandler";
 
 import Calendar from "../../Calendar/Calendar";
@@ -13,7 +16,9 @@ import {
   PopUpNewCardClose,
 } from "./PopNewCard.styled";
 
-const PopNewCard = ({ setCardList }) => {
+const PopNewCard = () => {
+  const { setCardList } = useContext(TasksContext);
+
   const token = JSON.parse(localStorage.getItem("localUser")).token;
   const navigate = useNavigate();
 

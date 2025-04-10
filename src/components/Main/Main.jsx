@@ -1,9 +1,13 @@
+import { useContext } from "react";
+
+import { TasksContext } from "../TasksContext";
+
 import CardsItem from "../Card/CardsItem";
 import Column from "../Column/Column";
 import { statusDefiner, correctedData } from "../../services/utilities";
 import { StyledMain, Container, MainBlock, MainContent } from "./Main.styled";
 
-function propsOfComponent(array, taskIdDefiner) {
+function propsOfComponent(array) {
   const props = array.map((el) => {
     return (
       <CardsItem
@@ -12,7 +16,6 @@ function propsOfComponent(array, taskIdDefiner) {
         title={el.title}
         date={correctedData(el.date)}
         description={el.description}
-        getTask={taskIdDefiner}
       />
     );
   });
@@ -20,7 +23,8 @@ function propsOfComponent(array, taskIdDefiner) {
   return props;
 }
 
-const Main = ({ taskIdDefiner, cardList, loading, error }) => {
+const Main = () => {
+  const { cardList, error } = useContext(TasksContext);
   return (
     <StyledMain>
       <Container>
@@ -30,42 +34,32 @@ const Main = ({ taskIdDefiner, cardList, loading, error }) => {
               <>
                 <Column
                   name="Без статуса"
-                  loading={loading}
                   componentsObject={propsOfComponent(
-                    statusDefiner(cardList, "Без статуса"),
-                    taskIdDefiner
+                    statusDefiner(cardList, "Без статуса")
                   )}
                 />
                 <Column
                   name="Нужно сделать"
-                  loading={loading}
                   componentsObject={propsOfComponent(
-                    statusDefiner(cardList, "Нужно сделать"),
-                    taskIdDefiner
+                    statusDefiner(cardList, "Нужно сделать")
                   )}
                 />
                 <Column
                   name="В работе"
-                  loading={loading}
                   componentsObject={propsOfComponent(
-                    statusDefiner(cardList, "В работе"),
-                    taskIdDefiner
+                    statusDefiner(cardList, "В работе")
                   )}
                 />
                 <Column
                   name="Тестирование"
-                  loading={loading}
                   componentsObject={propsOfComponent(
-                    statusDefiner(cardList, "Тестирование"),
-                    taskIdDefiner
+                    statusDefiner(cardList, "Тестирование")
                   )}
                 />
                 <Column
                   name="Готово"
-                  loading={loading}
                   componentsObject={propsOfComponent(
-                    statusDefiner(cardList, "Готово"),
-                    taskIdDefiner
+                    statusDefiner(cardList, "Готово")
                   )}
                 />
               </>

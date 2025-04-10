@@ -1,12 +1,19 @@
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const PopUser = ({ setIsToken }) => {
+import { AuthContext } from "../../AuthContext";
+import { TasksContext } from "../../TasksContext";
+
+const PopUser = () => {
+  const { setIsToken } = useContext(AuthContext);
+  const { setCardList } = useContext(TasksContext);
   const navigate = useNavigate();
 
   const exitButton = (event) => {
     event.stopPropagation();
     event.preventDefault();
     localStorage.removeItem("localUser");
+    setCardList([]);
     setIsToken(false);
     navigate("/sign-in");
   };

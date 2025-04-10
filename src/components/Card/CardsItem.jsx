@@ -1,4 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+
+import { TasksContext } from "../TasksContext";
+
 import {
   CardsCard,
   CardsGroup,
@@ -9,7 +13,8 @@ import {
   CardDate,
 } from "./CardsItem.styled";
 
-const CardsItem = ({ topic, title, date, descriprion, getTask }) => {
+const CardsItem = ({ topic, title, date, descriprion }) => {
+  const { getTaskById } = useContext(TasksContext);
   const token = JSON.parse(localStorage.getItem("localUser")).token;
   const navigate = useNavigate();
 
@@ -26,7 +31,7 @@ const CardsItem = ({ topic, title, date, descriprion, getTask }) => {
                 event.stopPropagation;
                 event.preventDefault;
                 const taskId = event.currentTarget.closest("[id]").id;
-                getTask({ taskId, token });
+                getTaskById({ taskId, token });
                 navigate("/task-browse/" + taskId);
               }}
             >
