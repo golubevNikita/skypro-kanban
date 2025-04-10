@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { openNewCardPopUp } from "../PopUps/PopNewCard/PopNewCard";
 import { Container } from "../Main/Main.styled";
 
 import {
@@ -28,11 +27,7 @@ const Header = () => {
   const [theme, setTheme] = useState("light");
 
   const toggleTheme = () => {
-    if (theme === "dark") {
-      setTheme("light");
-    } else {
-      setTheme("dark");
-    }
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   const userName = JSON.parse(localStorage.getItem("localUser")).name;
@@ -45,7 +40,7 @@ const Header = () => {
         <Container>
           <HeaderBlock>
             <HeaderLogo>
-              <a href="" target="_self">
+              <Link to={"/"} target="_self">
                 <img
                   src={`${
                     theme === "dark"
@@ -54,12 +49,12 @@ const Header = () => {
                   }`}
                   alt="logo"
                 />
-              </a>
+              </Link>
             </HeaderLogo>
 
             <HeaderNav>
-              <HeaderButtonNew onClick={openNewCardPopUp} id="btnMainNew">
-                <a>Создать новую задачу</a>
+              <HeaderButtonNew id="btnMainNew">
+                <Link to={"/new-task"}>Создать новую задачу</Link>
               </HeaderButtonNew>
               <HeaderUser onClick={toggleUserPopUp}>{userName}</HeaderUser>
 
