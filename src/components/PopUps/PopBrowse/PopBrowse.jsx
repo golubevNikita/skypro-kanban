@@ -1,12 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { TasksContext } from "../../TasksContext";
 
 import Calendar from "../../Calendar/Calendar";
 import { BrowsePopUp, CategoriesTheme, StatusTheme } from "./PopBrowse.styled";
 import { taskDelete, taskChange } from "../../../services/tasksHandler";
 import { correctedData } from "../../../services/utilities";
 
-const PopBrowse = ({ setCardList, taskId }) => {
+const PopBrowse = () => {
+  const { setCardList, taskId } = useContext(TasksContext);
   const token = JSON.parse(localStorage.getItem("localUser")).token;
 
   const navigate = useNavigate();
@@ -20,7 +23,6 @@ const PopBrowse = ({ setCardList, taskId }) => {
     setDefaultTextAreaValue(taskId.description);
   }, [taskId]);
 
-  // const currentTaskInfo = { ...taskId };
   const [taskInfo, setTaskInfo] = useState({ ...taskId });
 
   const toggleRedacted = () => {

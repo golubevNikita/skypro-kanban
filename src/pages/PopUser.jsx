@@ -1,7 +1,7 @@
 import PopUser from "../components/PopUps/PopUser/PopUser";
 
-const PopUserPage = ({ setIsToken }) => {
-  return <PopUser setIsToken={setIsToken} />;
+const PopUserPage = () => {
+  return <PopUser />;
 };
 
 export default PopUserPage;

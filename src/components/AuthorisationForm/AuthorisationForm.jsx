@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { formErrors } from "../../services/utilities";
 import { signIn, signUp } from "../../services/authorisation";
+
+import { AuthContext } from "../AuthContext";
 
 import {
   GlobalStyle,
@@ -16,7 +18,9 @@ import {
   ModalFormFooter,
 } from "./AuthorisationForm.styled";
 
-const AuthorisationForm = ({ setIsToken, isSignUp }) => {
+const AuthorisationForm = ({ isSignUp }) => {
+  const { setIsToken } = useContext(AuthContext);
+
   const [inputData, setInputData] = useState({
     name: "",
     login: "",
@@ -68,19 +72,6 @@ const AuthorisationForm = ({ setIsToken, isSignUp }) => {
       }
     });
   };
-
-  // try {
-  //   signIn({ inputData }).then((data) => {
-  //     localStorage.setItem("localUser", JSON.stringify(data));
-  //     navigate("/");
-  //   });
-  // } catch (error) {
-  //   setError(error);
-  //   console.log("error", error);
-  // }
-  // navigate добавляется в случае, когда надо сделать что-нибудь ещё,
-  // помимо перехода на другую страницу
-  // тут надо вставить отправку данных на сервер и валидацию формы
 
   return (
     <>

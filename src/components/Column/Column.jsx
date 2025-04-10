@@ -1,3 +1,7 @@
+import { useContext } from "react";
+
+import { TasksContext } from "../TasksContext";
+
 import {
   CardsItem,
   MainColumn,
@@ -7,7 +11,9 @@ import {
   LoadingPageLoader,
 } from "./Column.styled";
 
-const Column = ({ name, loading, componentsObject }) => {
+const Column = ({ name, componentsObject }) => {
+  const { loading } = useContext(TasksContext);
+
   const components = componentsObject.map((el) => {
     return (
       <CardsItem id={el.key} key={el.key}>
