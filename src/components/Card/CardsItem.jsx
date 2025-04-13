@@ -1,32 +1,38 @@
-import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { TasksContext } from "../TasksContext";
+import { TasksContext } from "../../сontext/TasksContext";
 
-import {
-  CardsCard,
-  CardsGroup,
-  CardsTheme,
-  CardButton,
-  CardContent,
-  CardTitle,
-  CardDate,
-} from "./CardsItem.styled";
+import { getTask } from "../../services/tasksHandler";
+
+import * as S from "./CardsItem.styled";
 
 const CardsItem = ({ topic, title, date, descriprion }) => {
-  const { getTaskById } = useContext(TasksContext);
+  const { setError, setTaskId } = useContext(TasksContext);
   const token = JSON.parse(localStorage.getItem("localUser")).token;
   const navigate = useNavigate();
 
+  const getTaskById = ({ taskId, token }) => {
+    const data = getTask({ taskId, token });
+
+    data.then((response) => {
+      if (response.name === "AxiosError") {
+        setError(response.response.data.error);
+      } else {
+        setTaskId(response.data.task);
+      }
+    });
+  };
+
   return (
     <>
-      <CardsCard>
-        <CardsGroup>
-          <CardsTheme color={topic}>
+      <S.CardsContainer>
+        <S.CardsGroup>
+          <S.CardsTheme color={topic}>
             <p>{topic}</p>
-          </CardsTheme>
+          </S.CardsTheme>
           <a target="_self">
-            <CardButton
+            <S.CardButton
               onClick={(event) => {
                 event.stopPropagation;
                 event.preventDefault;
@@ -38,14 +44,14 @@ const CardsItem = ({ topic, title, date, descriprion }) => {
               <div></div>
               <div></div>
               <div></div>
-            </CardButton>
+            </S.CardButton>
           </a>
-        </CardsGroup>
-        <CardContent>
+        </S.CardsGroup>
+        <S.CardContent>
           <a href="" target="_blank">
-            <CardTitle>{title}</CardTitle>
+            <S.CardTitle>{title}</S.CardTitle>
           </a>
-          <CardDate>
+          <S.CardDate>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="13"
@@ -75,9 +81,9 @@ const CardsItem = ({ topic, title, date, descriprion }) => {
               </defs>
             </svg>
             <p>{date}</p>
-          </CardDate>
-        </CardContent>
-      </CardsCard>
+          </S.CardDate>
+        </S.CardContent>
+      </S.CardsContainer>
     </>
   );
 };

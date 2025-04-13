@@ -1,73 +1,81 @@
-import { useContext } from "react";
+import { useContext, useCallback, useEffect } from "react";
 
-import { TasksContext } from "../TasksContext";
+import { TasksContext } from "../../сontext/TasksContext";
 
-import CardsItem from "../Card/CardsItem";
+import { getTasks } from "../../services/tasksHandler";
+import { statusDefiner } from "../../services/utilities";
+
 import Column from "../Column/Column";
-import { statusDefiner, correctedData } from "../../services/utilities";
-import { StyledMain, Container, MainBlock, MainContent } from "./Main.styled";
+import Loading from "../Loading/Loading";
 
-function propsOfComponent(array) {
-  const props = array.map((el) => {
-    return (
-      <CardsItem
-        key={el._id}
-        topic={el.topic}
-        title={el.title}
-        date={correctedData(el.date)}
-        description={el.description}
-      />
-    );
-  });
-
-  return props;
-}
+import * as S from "./Main.styled";
 
 const Main = () => {
-  const { cardList, error } = useContext(TasksContext);
+  const { cardList, setCardList, loading, setLoading, error, setError } =
+    useContext(TasksContext);
+
+  const getCardList = useCallback(async () => {
+    try {
+      const token = JSON.parse(localStorage.getItem("localUser")).token;
+
+      getTasks(token).then((response) => {
+        if (response.name === "AxiosError") {
+          setError(response.response.data.error);
+          console.log(error);
+        } else {
+          setCardList(response.data.tasks);
+          setLoading(false);
+        }
+      });
+    } catch (err) {
+      setError(err.response.data.error);
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    getCardList();
+  }, [getCardList]);
+
   return (
-    <StyledMain>
-      <Container>
-        <MainBlock>
-          <MainContent>
-            {error || (
-              <>
-                <Column
-                  name="Без статуса"
-                  componentsObject={propsOfComponent(
-                    statusDefiner(cardList, "Без статуса")
-                  )}
-                />
-                <Column
-                  name="Нужно сделать"
-                  componentsObject={propsOfComponent(
-                    statusDefiner(cardList, "Нужно сделать")
-                  )}
-                />
-                <Column
-                  name="В работе"
-                  componentsObject={propsOfComponent(
-                    statusDefiner(cardList, "В работе")
-                  )}
-                />
-                <Column
-                  name="Тестирование"
-                  componentsObject={propsOfComponent(
-                    statusDefiner(cardList, "Тестирование")
-                  )}
-                />
-                <Column
-                  name="Готово"
-                  componentsObject={propsOfComponent(
-                    statusDefiner(cardList, "Готово")
-                  )}
-                />
-              </>
+    <S.StyledMain>
+      <S.Container>
+        <S.MainBlock>
+          <S.MainContent>
+            {loading ? (
+              <Loading />
+            ) : (
+              error || (
+                <>
+                  <Column
+                    name="Без статуса"
+                    componentsObject={statusDefiner(cardList, "Без статуса")}
+                  />
+                  <Column
+                    name="Нужно сделать"
+                    componentsObject={statusDefiner(cardList, "Нужно сделать")}
+                  />
+                  <Column
+                    name="В работе"
+                    componentsObject={statusDefiner(cardList, "В работе")}
+                  />
+                  <Column
+                    name="Тестирование"
+                    componentsObject={statusDefiner(cardList, "Тестирование")}
+                  />
+                  <Column
+                    name="Готово"
+                    componentsObject={statusDefiner(cardList, "Готово")}
+                  />
+                </>
+              )
             )}
-          </MainContent>
-        </MainBlock>
-      </Container>
-    </StyledMain>
+          </S.MainContent>
+        </S.MainBlock>
+      </S.Container>
+    </S.StyledMain>
   );
 };
 

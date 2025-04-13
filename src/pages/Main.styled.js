@@ -1,7 +1,13 @@
-import createGlobalStyle from "styled-components";
-import styled from "styled-components";
+import { createGlobalStyle, styled } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
+  #root {
+    /* max-width: 1280px;
+    padding: 2rem; */
+    margin: 0 auto;
+    text-align: center;
+  }
+
   * {
     margin: 0;
     padding: 0;

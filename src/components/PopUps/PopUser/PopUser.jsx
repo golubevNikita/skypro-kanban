@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { AuthContext } from "../../AuthContext";
-import { TasksContext } from "../../TasksContext";
+import { AuthContext } from "../../../сontext/AuthContext";
+import { TasksContext } from "../../../сontext/TasksContext";
 
 const PopUser = () => {
-  const { setIsToken } = useContext(AuthContext);
+  const { setIsAuth } = useContext(AuthContext);
   const { setCardList } = useContext(TasksContext);
   const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ const PopUser = () => {
     event.preventDefault();
     localStorage.removeItem("localUser");
     setCardList([]);
-    setIsToken(false);
+    setIsAuth(false);
     navigate("/sign-in");
   };
 

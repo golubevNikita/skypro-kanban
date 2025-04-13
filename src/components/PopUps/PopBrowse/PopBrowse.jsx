@@ -1,12 +1,14 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { TasksContext } from "../../TasksContext";
+import { TasksContext } from "../../../сontext/TasksContext";
 
-import Calendar from "../../Calendar/Calendar";
-import { BrowsePopUp, CategoriesTheme, StatusTheme } from "./PopBrowse.styled";
 import { taskDelete, taskChange } from "../../../services/tasksHandler";
 import { correctedData } from "../../../services/utilities";
+
+import Calendar from "../../Calendar/Calendar";
+
+import * as S from "./PopBrowse.styled";
 
 const PopBrowse = () => {
   const { setCardList, taskId } = useContext(TasksContext);
@@ -87,24 +89,24 @@ const PopBrowse = () => {
   }, [isRedacted]);
 
   return (
-    <BrowsePopUp id="popBrowse">
+    <S.BrowsePopUp id="popBrowse">
       <div className="pop-browse__container">
         <div className="pop-browse__block">
           <div className="pop-browse__content">
             <div className="pop-browse__top-block">
               <h3 className="pop-browse__ttl">{taskId.title}</h3>
-              <CategoriesTheme $color={taskId.topic} $isactive={taskId.topic}>
+              <S.CategoriesTheme $color={taskId.topic} $isactive={taskId.topic}>
                 <p>{taskId.topic}</p>
-              </CategoriesTheme>
+              </S.CategoriesTheme>
             </div>
             <div className="pop-browse__status status">
               <p className="status__p subttl">Статус</p>
 
               <div className="status__themes">
                 {isRedacted ? (
-                  <StatusTheme $color={"gray"}>
+                  <S.StatusTheme $color={"gray"}>
                     <p>{taskId.status}</p>
-                  </StatusTheme>
+                  </S.StatusTheme>
                 ) : (
                   <>
                     <div
@@ -316,6 +318,16 @@ const PopBrowse = () => {
                   <button
                     className="btn-edit__delete _btn-bor _hover03"
                     id="btnDelete"
+                    onClick={(event) => {
+                      event.stopPropagation;
+                      event.preventDefault;
+                      const deletedTaskId = taskId["_id"];
+
+                      taskDelete({ deletedTaskId, token }).then((response) => {
+                        setCardList(response.data.tasks);
+                        navigate("/");
+                      });
+                    }}
                   >
                     <a>Удалить задачу</a>
                   </button>
@@ -335,7 +347,7 @@ const PopBrowse = () => {
           </div>
         </div>
       </div>
-    </BrowsePopUp>
+    </S.BrowsePopUp>
   );
 };
 

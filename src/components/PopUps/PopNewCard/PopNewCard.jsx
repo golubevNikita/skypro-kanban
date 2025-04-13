@@ -1,20 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { TasksContext } from "../../TasksContext";
+import { TasksContext } from "../../../сontext/TasksContext";
 
 import { taskAdd } from "../../../services/tasksHandler";
 
 import Calendar from "../../Calendar/Calendar";
 
-import {
-  PopUpNewCard,
-  PopUpNewCardContainer,
-  PopUpNewCardBlock,
-  PopUpNewCardContent,
-  PopUpNewCardTitle,
-  PopUpNewCardClose,
-} from "./PopNewCard.styled";
+import * as S from "./PopNewCard.styled";
 
 const PopNewCard = () => {
   const { setCardList } = useContext(TasksContext);
@@ -60,19 +53,19 @@ const PopNewCard = () => {
   }, []);
 
   return (
-    <PopUpNewCard id="popNewCard">
-      <PopUpNewCardContainer>
-        <PopUpNewCardBlock>
-          <PopUpNewCardContent>
-            <PopUpNewCardTitle>Создание задачи</PopUpNewCardTitle>
-            <PopUpNewCardClose
+    <S.PopUpNewCard id="popNewCard">
+      <S.PopUpNewCardContainer>
+        <S.PopUpNewCardBlock>
+          <S.PopUpNewCardContent>
+            <S.PopUpNewCardTitle>Создание задачи</S.PopUpNewCardTitle>
+            <S.PopUpNewCardClose
               onClick={() => {
                 setNewTaskInfo({});
                 navigate("/");
               }}
             >
               &#10006;
-            </PopUpNewCardClose>
+            </S.PopUpNewCardClose>
             <div className="pop-new-card__wrap">
               <form
                 className="pop-new-card__form form-new"
@@ -144,10 +137,10 @@ const PopNewCard = () => {
             >
               Создать задачу
             </button>
-          </PopUpNewCardContent>
-        </PopUpNewCardBlock>
-      </PopUpNewCardContainer>
-    </PopUpNewCard>
+          </S.PopUpNewCardContent>
+        </S.PopUpNewCardBlock>
+      </S.PopUpNewCardContainer>
+    </S.PopUpNewCard>
   );
 };
 

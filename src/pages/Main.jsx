@@ -3,24 +3,21 @@ import { Outlet } from "react-router-dom";
 import Header from "../components/Header/Header";
 import Main from "../components/Main/Main";
 
-import TasksProvider from "../components/TasksContext";
+import { TasksProvider } from "../сontext/TasksProvider";
 
-// import { GlobalStyle } from "./Main.styled";
-import { Wrapper } from "./Main.styled";
+import { GlobalStyle, Wrapper } from "./Main.styled";
 
 const MainPage = () => {
   return (
     <>
-      {/* <GlobalStyle /> */}
       <TasksProvider>
+        <GlobalStyle />
         <Wrapper>
           <Header />
           <Main />
           <Outlet />
         </Wrapper>
       </TasksProvider>
-
-      <script src="js/script.js"></script>
     </>
   );
 };

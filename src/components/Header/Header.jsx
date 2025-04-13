@@ -1,21 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Container } from "../Main/Main.styled";
-
-import {
-  StyledHeader,
-  HeaderBlock,
-  HeaderLogo,
-  HeaderNav,
-  HeaderButtonNew,
-  HeaderUser,
-  HeaderUserPop,
-  HeaderUserClose,
-  HeaderUserName,
-  HeaderUserMail,
-  HeaderUserTheme,
-} from "./Header.styled";
+import * as S from "./Header.styled";
 
 const Header = () => {
   const [userPopUpDisplay, setUserPopUpDisplay] = useState(false);
@@ -36,10 +22,10 @@ const Header = () => {
 
   return (
     <>
-      <StyledHeader>
-        <Container>
-          <HeaderBlock>
-            <HeaderLogo>
+      <S.StyledHeader>
+        <S.HeaderContainer>
+          <S.HeaderBlock>
+            <S.HeaderLogo>
               <Link to={"/"} target="_self">
                 <img
                   src={`${
@@ -50,38 +36,40 @@ const Header = () => {
                   alt="logo"
                 />
               </Link>
-            </HeaderLogo>
+            </S.HeaderLogo>
 
-            <HeaderNav>
-              <HeaderButtonNew id="btnMainNew">
+            <S.HeaderNav>
+              <S.HeaderButtonNew id="btnMainNew">
                 <Link to={"/new-task"}>Создать новую задачу</Link>
-              </HeaderButtonNew>
-              <HeaderUser onClick={toggleUserPopUp}>{userName}</HeaderUser>
+              </S.HeaderButtonNew>
+              <S.HeaderUser onClick={toggleUserPopUp}>{userName}</S.HeaderUser>
 
               {userPopUpDisplay ? (
-                <HeaderUserPop>
-                  <HeaderUserClose onClick={toggleUserPopUp}>x</HeaderUserClose>
-                  <HeaderUserName>{userName}</HeaderUserName>
-                  <HeaderUserMail>{userMail}</HeaderUserMail>
-                  <HeaderUserTheme>
+                <S.HeaderUserPop>
+                  <S.HeaderUserClose onClick={toggleUserPopUp}>
+                    x
+                  </S.HeaderUserClose>
+                  <S.HeaderUserName>{userName}</S.HeaderUserName>
+                  <S.HeaderUserMail>{userMail}</S.HeaderUserMail>
+                  <S.HeaderUserTheme>
                     <p>{theme === "light" ? "Светлая тема" : "Тёмная тема"}</p>
                     <input
                       onChange={toggleTheme}
                       type="checkbox"
                       name="checkbox"
                     />
-                  </HeaderUserTheme>
+                  </S.HeaderUserTheme>
                   <button type="button">
                     <Link to={"/user"}>Выйти</Link>
                   </button>
-                </HeaderUserPop>
+                </S.HeaderUserPop>
               ) : (
                 ""
               )}
-            </HeaderNav>
-          </HeaderBlock>
-        </Container>
-      </StyledHeader>
+            </S.HeaderNav>
+          </S.HeaderBlock>
+        </S.HeaderContainer>
+      </S.StyledHeader>
     </>
   );
 };

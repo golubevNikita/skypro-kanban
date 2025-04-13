@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { colorDefiner, backgroundColorDefiner } from "../../services/utilities";
 
-export const CardsCard = styled.div`
-  padding: 2em;
-
+export const CardsContainer = styled.div`
   width: 220px;
   height: 130px;
   background-color: #ffffff;
@@ -15,15 +13,6 @@ export const CardsCard = styled.div`
   padding: 15px 13px 19px;
 
   @media screen and (max-width: 1200px) {
-    width: 220px;
-    height: 130px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: stretch;
-    padding: 15px 13px 19px;
   }
 `;
 

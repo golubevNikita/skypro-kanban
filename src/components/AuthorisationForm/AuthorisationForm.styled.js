@@ -1,15 +1,21 @@
 import { styled, createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  #root {
+    text-align: center;
+  }
 
-  &:before,
-  &:after {
+  * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
   }
 
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+  
   a,
   a:visited {
     text-decoration: none;
@@ -27,32 +33,35 @@ export const GlobalStyle = createGlobalStyle`
 
   html,
   body {
-    /* width: 100%;
-    height: 100%; */
+    width: 100%;
+    height: 100%;
     font-family: "Roboto", sans-serif;
+    color: #000000;
    }
 
-  div,
+  /* div,
   button,
   a {
     font-family: "Roboto", sans-serif;
-  }
+  } */
 `;
+
+// Оставил с целью сохранить исходную разметку
 
 export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  /* overflow-x: hidden;
+  overflow-y: scroll; */
   background-color: #eaeef6;
 `;
 
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
+  /* overflow-x: hidden;
   overflow-y: scroll;
-  background-color: #eaeef6;
+  background-color: #eaeef6; */
 `;
 
 export const Modal = styled.div`
