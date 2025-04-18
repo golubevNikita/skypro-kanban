@@ -33,6 +33,7 @@ export const MainBlock = styled.div`
 export const MainContent = styled.div`
   width: 100%;
   display: flex;
+  text-align: start;
 
   @media screen and (max-width: 1200px) {
     display: block;

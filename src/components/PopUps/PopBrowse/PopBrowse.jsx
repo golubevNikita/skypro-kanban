@@ -1,12 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Calendar from "../../Calendar/Calendar";
-import { BrowsePopUp, CategoriesTheme, StatusTheme } from "./PopBrowse.styled";
+import { TasksContext } from "../../../сontext/TasksContext";
+
 import { taskDelete, taskChange } from "../../../services/tasksHandler";
 import { correctedData } from "../../../services/utilities";
 
-const PopBrowse = ({ setCardList, taskId }) => {
+import Calendar from "../../Calendar/Calendar";
+
+import * as S from "./PopBrowse.styled";
+
+const PopBrowse = () => {
+  const { setCardList, taskId } = useContext(TasksContext);
   const token = JSON.parse(localStorage.getItem("localUser")).token;
 
   const navigate = useNavigate();
@@ -20,7 +25,6 @@ const PopBrowse = ({ setCardList, taskId }) => {
     setDefaultTextAreaValue(taskId.description);
   }, [taskId]);
 
-  // const currentTaskInfo = { ...taskId };
   const [taskInfo, setTaskInfo] = useState({ ...taskId });
 
   const toggleRedacted = () => {
@@ -85,24 +89,24 @@ const PopBrowse = ({ setCardList, taskId }) => {
   }, [isRedacted]);
 
   return (
-    <BrowsePopUp id="popBrowse">
+    <S.BrowsePopUp id="popBrowse">
       <div className="pop-browse__container">
         <div className="pop-browse__block">
           <div className="pop-browse__content">
             <div className="pop-browse__top-block">
               <h3 className="pop-browse__ttl">{taskId.title}</h3>
-              <CategoriesTheme $color={taskId.topic} $isactive={taskId.topic}>
+              <S.CategoriesTheme $color={taskId.topic} $isactive={taskId.topic}>
                 <p>{taskId.topic}</p>
-              </CategoriesTheme>
+              </S.CategoriesTheme>
             </div>
             <div className="pop-browse__status status">
               <p className="status__p subttl">Статус</p>
 
               <div className="status__themes">
                 {isRedacted ? (
-                  <StatusTheme $color={"gray"}>
+                  <S.StatusTheme $color={"gray"}>
                     <p>{taskId.status}</p>
-                  </StatusTheme>
+                  </S.StatusTheme>
                 ) : (
                   <>
                     <div
@@ -314,6 +318,16 @@ const PopBrowse = ({ setCardList, taskId }) => {
                   <button
                     className="btn-edit__delete _btn-bor _hover03"
                     id="btnDelete"
+                    onClick={(event) => {
+                      event.stopPropagation;
+                      event.preventDefault;
+                      const deletedTaskId = taskId["_id"];
+
+                      taskDelete({ deletedTaskId, token }).then((response) => {
+                        setCardList(response.data.tasks);
+                        navigate("/");
+                      });
+                    }}
                   >
                     <a>Удалить задачу</a>
                   </button>
@@ -333,7 +347,7 @@ const PopBrowse = ({ setCardList, taskId }) => {
           </div>
         </div>
       </div>
-    </BrowsePopUp>
+    </S.BrowsePopUp>
   );
 };
 

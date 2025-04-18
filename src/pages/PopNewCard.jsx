@@ -1,7 +1,7 @@
 import PopNewCard from "../components/PopUps/PopNewCard/PopNewCard";
 
-const PopNewCardPage = ({ setCardList }) => {
-  return <PopNewCard setCardList={setCardList} />;
+const PopNewCardPage = () => {
+  return <PopNewCard />;
 };
 
 export default PopNewCardPage;

@@ -1,8 +1,13 @@
 import "./App.css";
 import AppRoutes from "./components/AppRoutes";
+import { AuthProvider } from "./сontext/AuthProvider";
 
 function App() {
-  return <AppRoutes />;
+  return (
+    <AuthProvider>
+      <AppRoutes />
+    </AuthProvider>
+  );
 }
 
 export default App;
