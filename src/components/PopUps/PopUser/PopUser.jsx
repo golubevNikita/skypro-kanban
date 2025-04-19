@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../сontext/AuthContext";
 import { TasksContext } from "../../../сontext/TasksContext";
 
+import * as S from "./PopUser.styled";
+
 const PopUser = () => {
   const { setIsAuth } = useContext(AuthContext);
   const { setCardList } = useContext(TasksContext);
@@ -20,29 +22,25 @@ const PopUser = () => {
 
   return (
     <>
-      <div className="pop-exit" id="popExit">
-        <div className="pop-exit__container">
-          <div className="pop-exit__block">
-            <div className="pop-exit__ttl">
+      <S.PopExit id="popExit">
+        <S.PopExitContainer>
+          <S.PopExitBlock>
+            <S.PopExitTtl>
               <h2>Выйти из аккаунта?</h2>
-            </div>
+            </S.PopExitTtl>
             <form className="pop-exit__form" id="formExit" action="#">
               <div className="pop-exit__form-group">
-                <button
-                  onClick={exitButton}
-                  className="pop-exit__exit-yes _hover01"
-                  id="exitYes"
-                >
+                <S.PopExitYes onClick={exitButton} id="exitYes">
                   <a>Да, выйти</a>
-                </button>
-                <button className="pop-exit__exit-no _hover03" id="exitNo">
+                </S.PopExitYes>
+                <S.PopExitNo id="exitNo">
                   <Link to={"/"}>Нет, остаться</Link>
-                </button>
+                </S.PopExitNo>
               </div>
             </form>
-          </div>
-        </div>
-      </div>
+          </S.PopExitBlock>
+        </S.PopExitContainer>
+      </S.PopExit>
     </>
   );
 };

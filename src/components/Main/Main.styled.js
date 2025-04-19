@@ -3,7 +3,9 @@ import styled from "styled-components";
 export const StyledMain = styled.main`
   width: 100%;
   min-height: calc(100vh - 70px);
-  background-color: #eaeef6;
+  background-color: ${function ({ theme }) {
+    return theme.primaryBackground;
+  }};
 `;
 
 export const Container = styled.div`
@@ -34,6 +36,7 @@ export const MainContent = styled.div`
   width: 100%;
   display: flex;
   text-align: start;
+  position: relative;
 
   @media screen and (max-width: 1200px) {
     display: block;

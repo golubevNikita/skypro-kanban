@@ -2,8 +2,21 @@ import styled from "styled-components";
 
 export const LoadingContainer = styled.div`
   width: 100%;
-  display: block;
-  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+
+  position: ${function (props) {
+    return props.$isopacity ? "absolute" : "relative";
+  }};
+
+  background: ${function (props) {
+    return props.$isopacity ? "rgba(0, 0, 0, 0.4)" : "rgb(0, 0, 0, 0)";
+  }};
+
+  z-index: 7;
 
   @media screen and (max-width: 1200px) {
     overflow-y: auto;
@@ -28,7 +41,9 @@ export const LoadingPageLoader = styled.div`
     position: absolute;
     left: 8px;
     width: 16px;
-    background: #000;
+    background: ${function ({ theme }) {
+      return theme.textColor;
+    }};
     animation: loader 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
   }
 

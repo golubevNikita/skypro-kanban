@@ -1,9 +1,9 @@
 import * as S from "./Loading.styled";
 
-const Loading = () => {
+const Loading = ({ isopacity }) => {
   return (
     <>
-      <S.LoadingContainer>
+      <S.LoadingContainer $isopacity={isopacity}>
         <S.LoadingPage>
           <h3>Данные загружаются</h3>
           <S.LoadingPageLoader>
