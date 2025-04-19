@@ -1,12 +1,17 @@
 import "./App.css";
 import AppRoutes from "./components/AppRoutes";
+
+import { ThemesProvider } from "./сontext/ThemesProvider";
+
 import { AuthProvider } from "./сontext/AuthProvider";
 
 function App() {
   return (
-    <AuthProvider>
-      <AppRoutes />
-    </AuthProvider>
+    <ThemesProvider>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
+    </ThemesProvider>
   );
 }
 

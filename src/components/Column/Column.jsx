@@ -4,7 +4,7 @@ import CardsItem from "../Card/CardsItem";
 
 import * as S from "./Column.styled";
 
-const Column = ({ name, componentsObject }) => {
+const Column = ({ name, cardsByStatus }) => {
   return (
     <>
       <S.MainColumn>
@@ -12,7 +12,7 @@ const Column = ({ name, componentsObject }) => {
           <p>{name}</p>
         </S.ColumnTitle>
         <S.Cards>
-          {componentsObject.map((el) => {
+          {cardsByStatus.map((el) => {
             return (
               <S.CardsItem id={el._id} key={el._id}>
                 <CardsItem

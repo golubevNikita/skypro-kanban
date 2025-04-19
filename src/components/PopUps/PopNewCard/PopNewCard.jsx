@@ -1,9 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { TasksContext } from "../../../сontext/TasksContext";
 
 import { taskAdd } from "../../../services/tasksHandler";
+import { categoriesData } from "../../../services/utilities";
 
 import Calendar from "../../Calendar/Calendar";
 
@@ -12,7 +13,7 @@ import * as S from "./PopNewCard.styled";
 const PopNewCard = () => {
   const { setCardList } = useContext(TasksContext);
 
-  const token = JSON.parse(localStorage.getItem("localUser")).token;
+  const token = JSON.parse(localStorage.getItem("localUser"))?.token;
   const navigate = useNavigate();
 
   const [newTaskInfo, setNewTaskInfo] = useState({
@@ -24,33 +25,33 @@ const PopNewCard = () => {
   });
 
   function taskInfoChange(event) {
-    event.stopPropagation;
-    event.preventDefault;
+    event.stopPropagation();
+    event.preventDefault();
     setNewTaskInfo({ ...newTaskInfo, [event.target.name]: event.target.value });
   }
 
-  function taskInfoChangeByClick(event) {
-    event.stopPropagation;
-    event.preventDefault;
+  const [activeCategory, setActiveCategory] = useState("");
+
+  function setNewTaskCategory(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    const selectedCategory = event.currentTarget.children[0].textContent;
+
+    setActiveCategory(selectedCategory);
+
     setNewTaskInfo({
       ...newTaskInfo,
-      topic: event.currentTarget.children[0].textContent,
+      topic: selectedCategory,
     });
   }
 
-  useEffect(() => {
-    const themes = document.querySelectorAll(".categories__theme");
+  const [deadline, setDeadline] = useState("");
 
-    for (const themeEl of themes) {
-      themeEl.addEventListener("click", () => {
-        themes.forEach((el) => {
-          el.classList.remove("_active-category");
-        });
-
-        themeEl.classList.add("_active-category");
-      });
-    }
-  }, []);
+  const newTaskDateSelect = (newSelected) => {
+    setDeadline(newSelected);
+    setNewTaskInfo({ ...newTaskInfo, date: new Date(newSelected).toJSON() });
+  };
 
   return (
     <S.PopUpNewCard id="popNewCard">
@@ -76,9 +77,8 @@ const PopNewCard = () => {
                   <label htmlFor="formTitle" className="subttl">
                     Название задачи
                   </label>
-                  <input
+                  <S.FormNewInput
                     onChange={taskInfoChange}
-                    className="form-new__input"
                     type="text"
                     name="title"
                     id="formTitle"
@@ -90,39 +90,36 @@ const PopNewCard = () => {
                   <label htmlFor="textArea" className="subttl">
                     Описание задачи
                   </label>
-                  <textarea
+                  <S.FormNewArea
                     onChange={taskInfoChange}
-                    className="form-new__area"
                     name="description"
                     id="textArea"
                     placeholder="Введите описание задачи..."
-                  ></textarea>
+                  ></S.FormNewArea>
                 </div>
               </form>
 
-              <Calendar />
+              <Calendar
+                isNewTask={true}
+                deadline={deadline}
+                newTaskDateSelect={newTaskDateSelect}
+              />
             </div>
             <div className="pop-new-card__categories categories">
               <p className="categories__p subttl">Категория</p>
               <div className="categories__themes">
-                <div
-                  onClick={taskInfoChangeByClick}
-                  className="categories__theme _orange"
-                >
-                  <p className="_orange">Web Design</p>
-                </div>
-                <div
-                  onClick={taskInfoChangeByClick}
-                  className="categories__theme _green"
-                >
-                  <p className="_green">Research</p>
-                </div>
-                <div
-                  onClick={taskInfoChangeByClick}
-                  className="categories__theme _purple"
-                >
-                  <p className="_purple">Copywriting</p>
-                </div>
+                {categoriesData.map((el, index) => {
+                  return (
+                    <S.CategoriesTheme
+                      $isactive={activeCategory === el}
+                      $color={el}
+                      key={index}
+                      onClick={setNewTaskCategory}
+                    >
+                      <p>{el}</p>
+                    </S.CategoriesTheme>
+                  );
+                })}
               </div>
             </div>
             <button

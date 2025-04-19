@@ -4,7 +4,9 @@ import { colorDefiner, backgroundColorDefiner } from "../../services/utilities";
 export const CardsContainer = styled.div`
   width: 220px;
   height: 130px;
-  background-color: #ffffff;
+  background-color: ${function ({ theme }) {
+    return theme.secondaryBackground;
+  }};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -31,12 +33,12 @@ export const CardsTheme = styled.div`
   padding: 5px 14px;
   border-radius: 18px;
 
-  background-color: ${function (props) {
-    return backgroundColorDefiner(props.color);
+  background-color: ${function ({ $color, theme }) {
+    return backgroundColorDefiner($color, theme);
   }};
 
-  color: ${function (props) {
-    return colorDefiner(props.color);
+  color: ${function ({ $color, theme }) {
+    return colorDefiner($color, theme);
   }};
 
   p {
@@ -44,8 +46,8 @@ export const CardsTheme = styled.div`
     font-weight: 600;
     line-height: 10px;
 
-    color: ${function (props) {
-      return colorDefiner(props.color);
+    color: ${function ({ $color, theme }) {
+      return colorDefiner($color, theme);
     }};
   }
 `;
@@ -78,7 +80,9 @@ export const CardTitle = styled.h3`
   font-size: 14px;
   font-weight: 500;
   line-height: 18px;
-  color: #000000;
+  color: ${function ({ theme }) {
+    return theme.textColor;
+  }};
   margin-bottom: 10px;
 `;
 

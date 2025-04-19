@@ -36,24 +36,22 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
     font-family: "Roboto", sans-serif;
-    color: #000000;
-   }
+    color: ${function ({ theme }) {
+      return theme.textColor;
+    }};
 
-  /* div,
-  button,
-  a {
-    font-family: "Roboto", sans-serif;
-  } */
+   }
 `;
 
 // Оставил с целью сохранить исходную разметку
-
 export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   /* overflow-x: hidden;
   overflow-y: scroll; */
-  background-color: #eaeef6;
+  background-color: ${function ({ theme }) {
+    return theme.primaryBackground;
+  }};
 `;
 
 export const Container = styled.div`
@@ -75,19 +73,25 @@ export const Modal = styled.div`
   justify-content: center;
 
   @media screen and (max-width: 375px) {
-    background-color: #ffffff;
+    background-color: ${function ({ theme }) {
+      return theme.secondaryBackground;
+    }};
   }
 `;
 
 export const ModalBlock = styled.div`
   display: block;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: ${function ({ theme }) {
+    return theme.secondaryBackground;
+  }};
   max-width: 368px;
   width: 100%;
   padding: 50px 60px;
   border-radius: 10px;
-  border: 0.7px solid #d4dbe5;
+  border: 0.7px solid ${function ({ theme }) {
+      return theme.secondaryBackground;
+    }};
   box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
 
   @media screen and (max-width: 375px) {
@@ -104,9 +108,12 @@ export const ModalTitle = styled.div`
   h2 {
     display: block;
     margin: 0 auto;
-    background-color: #ffffff;
+    background-color: ${function ({ theme }) {
+      return theme.secondaryBackground;
+    }};
     max-width: 368px;
     width: 100%;
+
     /* padding: 50px 60px;
     border-radius: 10px;
     border: 0.7px solid #d4dbe5;
@@ -139,6 +146,12 @@ export const ModalInput = styled.input`
   border: 0.7px solid rgba(148, 166, 190, 0.4);
   outline: none;
   padding: 10px 8px;
+  color: ${function ({ theme }) {
+    return theme.textColor;
+  }};
+  background-color: ${function ({ theme }) {
+    return theme.secondaryBackground;
+  }};
 
   &::placeholder {
     font-family: "Roboto", sans-serif;
