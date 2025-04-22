@@ -4,7 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { TasksContext } from "../../../сontext/TasksContext";
 
 import { taskDelete, taskChange } from "../../../services/tasksHandler";
-import { statusData, categoriesData } from "../../../services/utilities";
+import {
+  LS_USER,
+  statusData,
+  categoriesData,
+} from "../../../services/utilities";
 
 import Calendar from "../../Calendar/Calendar";
 
@@ -12,7 +16,7 @@ import * as S from "./PopBrowse.styled";
 
 const PopBrowse = () => {
   const { setCardList, taskById, setTaskById } = useContext(TasksContext);
-  const token = JSON.parse(localStorage.getItem("localUser"))?.token;
+  const token = JSON.parse(localStorage.getItem(LS_USER))?.token;
 
   const navigate = useNavigate();
 

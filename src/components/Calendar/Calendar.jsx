@@ -51,7 +51,7 @@ const Calendar = ({ isNewTask, deadline, newTaskDateSelect, handleSelect }) => {
         <S.CalendarPeriod>
           {taskById.date ? (
             <S.CalendarP>
-              Срок исполнения: <span>{correctedData(taskById.date)}</span>
+              Срок исполнения: <span>{correctedData(deadline)}</span>
             </S.CalendarP>
           ) : (
             <S.CalendarP>

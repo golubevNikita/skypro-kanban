@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { TasksContext } from "../../../сontext/TasksContext";
 
 import { taskAdd } from "../../../services/tasksHandler";
-import { categoriesData } from "../../../services/utilities";
+import { LS_USER, categoriesData } from "../../../services/utilities";
 
 import Calendar from "../../Calendar/Calendar";
 
@@ -13,21 +13,56 @@ import * as S from "./PopNewCard.styled";
 const PopNewCard = () => {
   const { setCardList } = useContext(TasksContext);
 
-  const token = JSON.parse(localStorage.getItem("localUser"))?.token;
+  const token = JSON.parse(localStorage.getItem(LS_USER))?.token;
   const navigate = useNavigate();
 
   const [newTaskInfo, setNewTaskInfo] = useState({
-    // title: "",
+    title: "",
     // topic: "",
     // status: "",
-    // description: "",
+    description: "",
     // date: "",
   });
+
+  const [errors, setErrors] = useState({
+    title: false,
+    description: false,
+  });
+
+  const [error, setError] = useState("");
 
   function taskInfoChange(event) {
     event.stopPropagation();
     event.preventDefault();
-    setNewTaskInfo({ ...newTaskInfo, [event.target.name]: event.target.value });
+
+    const { name, value } = event.target;
+    setNewTaskInfo({ ...newTaskInfo, [name]: value });
+
+    setErrors({
+      ...errors,
+      [name]: false,
+    });
+
+    setError("");
+  }
+
+  function newTaskErrors() {
+    let isCorrect = true;
+
+    if (!newTaskInfo.title.trim()) {
+      errors.title = true;
+      setError("Заполните обязательное поле");
+      isCorrect = false;
+    }
+
+    if (!newTaskInfo.description.trim()) {
+      errors.description = true;
+      setError("Заполните обязательное поле");
+      isCorrect = false;
+    }
+
+    setErrors(errors);
+    return isCorrect;
   }
 
   const [activeCategory, setActiveCategory] = useState("");
@@ -53,6 +88,15 @@ const PopNewCard = () => {
     setNewTaskInfo({ ...newTaskInfo, date: new Date(newSelected).toJSON() });
   };
 
+  function addNewTask() {
+    if (newTaskErrors()) {
+      taskAdd({ newTaskInfo, token }).then((response) => {
+        setCardList(response.data.tasks);
+        navigate("/");
+      });
+    }
+  }
+
   return (
     <S.PopUpNewCard id="popNewCard">
       <S.PopUpNewCardContainer>
@@ -74,27 +118,29 @@ const PopNewCard = () => {
                 action="#"
               >
                 <div className="form-new__block">
-                  <label htmlFor="formTitle" className="subttl">
-                    Название задачи
-                  </label>
+                  <S.Subttl htmlFor="formTitle">
+                    Название задачи {errors.title ? <p>{error}</p> : ""}
+                  </S.Subttl>
                   <S.FormNewInput
-                    onChange={taskInfoChange}
+                    $error={errors.title}
                     type="text"
                     name="title"
                     id="formTitle"
                     placeholder="Введите название задачи..."
+                    onChange={taskInfoChange}
                     autoFocus
                   />
                 </div>
                 <div className="form-new__block">
-                  <label htmlFor="textArea" className="subttl">
-                    Описание задачи
-                  </label>
+                  <S.Subttl htmlFor="textArea">
+                    Описание задачи {errors.description ? <p>{error}</p> : ""}
+                  </S.Subttl>
                   <S.FormNewArea
-                    onChange={taskInfoChange}
+                    $error={errors.description}
                     name="description"
                     id="textArea"
                     placeholder="Введите описание задачи..."
+                    onChange={taskInfoChange}
                   ></S.FormNewArea>
                 </div>
               </form>
@@ -123,12 +169,7 @@ const PopNewCard = () => {
               </div>
             </div>
             <button
-              onClick={() => {
-                taskAdd({ newTaskInfo, token }).then((response) => {
-                  setCardList(response.data.tasks);
-                  navigate("/");
-                });
-              }}
+              onClick={addNewTask}
               className="form-new__create _hover01"
               id="btnCreate"
             >

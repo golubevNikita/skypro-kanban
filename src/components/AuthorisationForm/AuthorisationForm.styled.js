@@ -1,47 +1,4 @@
-import { styled, createGlobalStyle } from "styled-components";
-
-export const GlobalStyle = createGlobalStyle`
-  #root {
-    text-align: center;
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  *:before,
-  *:after {
-    box-sizing: border-box;
-  }
-  
-  a,
-  a:visited {
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  button,
-  ._btn {
-    cursor: pointer;
-  }
-
-  ul li {
-    list-style: none;
-  }
-
-  html,
-  body {
-    width: 100%;
-    height: 100%;
-    font-family: "Roboto", sans-serif;
-    color: ${function ({ theme }) {
-      return theme.textColor;
-    }};
-
-   }
-`;
+import { styled } from "styled-components";
 
 // Оставил с целью сохранить исходную разметку
 export const Wrapper = styled.div`
@@ -143,7 +100,11 @@ export const ModalInput = styled.input`
   width: 100%;
   min-width: 100%;
   border-radius: 8px;
-  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  border: 0.7px solid;
+  border-color: ${function ({ $error }) {
+    return $error ? "#F84D4D" : "rgba(148, 166, 190, 0.4)";
+  }};
+
   outline: none;
   padding: 10px 8px;
   color: ${function ({ theme }) {
@@ -160,6 +121,22 @@ export const ModalInput = styled.input`
     line-height: 21px;
     letter-spacing: -0.28px;
     color: #94a6be;
+  }
+`;
+
+export const ErrorContainer = styled.div`
+  border: none;
+  background-color: ${function ({ theme }) {
+    return theme.secondaryBackground;
+  }};
+
+  p {
+    color: #f84d4d;
+    font-family: Arial;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    text-align: center;
   }
 `;
 

@@ -3,7 +3,7 @@ import { useEffect, useContext } from "react";
 import { TasksContext } from "../../сontext/TasksContext";
 
 import { getTasks } from "../../services/tasksHandler";
-import { statusDefiner } from "../../services/utilities";
+import { statusDefiner, LS_USER } from "../../services/utilities";
 
 import Column from "../Column/Column";
 import Loading from "../Loading/Loading";
@@ -22,7 +22,7 @@ const Main = () => {
   } = useContext(TasksContext);
 
   const getCardList = () => {
-    const token = JSON.parse(localStorage.getItem("localUser")).token;
+    const token = JSON.parse(localStorage.getItem(LS_USER)).token;
 
     getTasks(token)
       .then((response) => {

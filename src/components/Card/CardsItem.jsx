@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { LS_USER } from "../../services/utilities";
 
 import { TasksContext } from "../../сontext/TasksContext";
 
@@ -10,7 +11,7 @@ import * as S from "./CardsItem.styled";
 const CardsItem = ({ topic, title, date, descriprion }) => {
   const { setError, setTaskLoading, setTaskById } = useContext(TasksContext);
 
-  const token = JSON.parse(localStorage.getItem("localUser"))?.token;
+  const token = JSON.parse(localStorage.getItem(LS_USER))?.token;
   const navigate = useNavigate();
 
   const getTaskById = ({ taskId, token }) => {

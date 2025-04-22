@@ -435,6 +435,7 @@ body {
   margin-top: 14px;
   height: 200px;
 } */
+
 .form-new__create {
   width: 132px;
   height: 30px;
@@ -449,12 +450,12 @@ body {
   float: right;
 }
 
-/* .subttl {
+.subttl {
   color: #000;
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
-} */
+}
 
 /* .calendar {
   width: 182px;

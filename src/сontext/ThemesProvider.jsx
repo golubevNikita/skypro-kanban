@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
+import { LS_APP_THEME } from "../services/utilities";
+import { lightTheme, darkTheme } from "../services/themes";
+
 import { ThemesContext } from "./ThemesContext";
 
 import { ThemeProvider } from "styled-components";
 
-import { lightTheme, darkTheme } from "../services/themes";
-
 export const ThemesProvider = ({ children }) => {
   const [isDark, setIsDark] = useState(() => {
-    const themeInfo = localStorage.getItem("usingTheme");
+    const themeInfo = localStorage.getItem(LS_APP_THEME);
     return themeInfo === "dark";
   });
 
@@ -16,7 +17,7 @@ export const ThemesProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    localStorage.setItem("usingTheme", isDark ? "dark" : "light");
+    localStorage.setItem(LS_APP_THEME, isDark ? "dark" : "light");
   }, [isDark]);
 
   const theme = isDark ? darkTheme : lightTheme;

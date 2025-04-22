@@ -99,3 +99,7 @@ export const statusData = [
 ];
 
 export const categoriesData = ["Web Design", "Research", "Copywriting"];
+
+export const LS_USER = "localUser";
+
+export const LS_APP_THEME = "usingTheme";

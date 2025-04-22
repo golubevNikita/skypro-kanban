@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { LS_USER } from "../../services/utilities";
 
 import { ThemesContext } from "../../сontext/ThemesContext";
 
@@ -13,9 +14,9 @@ const Header = () => {
     setUserPopUpDisplay(!userPopUpDisplay);
   };
 
-  const userName = JSON.parse(localStorage.getItem("localUser")).name;
+  const userName = JSON.parse(localStorage.getItem(LS_USER)).name;
   const userMail =
-    JSON.parse(localStorage.getItem("localUser")).login + "@gmail.com";
+    JSON.parse(localStorage.getItem(LS_USER)).login + "@gmail.com";
 
   return (
     <>

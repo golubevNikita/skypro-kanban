@@ -5,10 +5,13 @@ import { ThemesProvider } from "./сontext/ThemesProvider";
 
 import { AuthProvider } from "./сontext/AuthProvider";
 
+import { GlobalStyle } from "./pages/Main.styled";
+
 function App() {
   return (
     <ThemesProvider>
       <AuthProvider>
+        <GlobalStyle />
         <AppRoutes />
       </AuthProvider>
     </ThemesProvider>

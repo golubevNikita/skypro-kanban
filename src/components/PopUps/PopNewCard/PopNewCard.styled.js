@@ -95,6 +95,25 @@ export const PopUpNewCardClose = styled.a`
   }
 `;
 
+export const Subttl = styled.label`
+  color: ${function ({ theme }) {
+    return theme.textColor;
+  }};
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  line-height: 100%;
+
+  p {
+    color: #f84d4d;
+    font-family: Arial;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    text-align: left;
+  }
+`;
+
 export const FormNewInput = styled.input`
   color: ${function ({ theme }) {
     return theme.textColor;
@@ -104,7 +123,12 @@ export const FormNewInput = styled.input`
   outline: none;
   padding: 14px;
   background: transparent;
-  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  border: 0.7px solid;
+
+  border-color: ${function ({ $error }) {
+    return $error ? "#F84D4D" : "rgba(148, 166, 190, 0.4)";
+  }};
+
   border-radius: 8px;
   font-size: 14px;
   line-height: 1;
@@ -137,7 +161,12 @@ export const FormNewArea = styled.textarea`
   outline: none;
   padding: 14px;
   background: transparent;
-  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  border: 0.7px solid;
+
+  border-color: ${function ({ $error }) {
+    return $error ? "#F84D4D" : "rgba(148, 166, 190, 0.4)";
+  }};
+
   border-radius: 8px;
   font-size: 14px;
   line-height: 1;

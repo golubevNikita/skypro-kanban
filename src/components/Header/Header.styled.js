@@ -75,6 +75,7 @@ export const HeaderUser = styled.a`
   justify-content: center;
   font-size: 14px;
   line-height: 20px;
+  font-weight: 500;
   color: ${function ({ theme }) {
     return theme.user.textColor;
   }};

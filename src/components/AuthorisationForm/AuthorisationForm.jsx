@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { formErrors } from "../../services/utilities";
+import { formErrors, LS_USER } from "../../services/utilities";
 import { signIn, signUp } from "../../services/authorisation";
 
 import { AuthContext } from "../../сontext/AuthContext";
@@ -42,7 +42,6 @@ const AuthorisationForm = ({ isSignUp }) => {
     event.preventDefault();
 
     if (!formErrors(inputData, errors, setErrors, setError, isSignUp)) {
-      console.log(error);
       return;
     }
 
@@ -53,9 +52,8 @@ const AuthorisationForm = ({ isSignUp }) => {
     data.then((response) => {
       if (response.name === "AxiosError") {
         setError(response.response.data.error);
-        console.log(error);
       } else {
-        localStorage.setItem("localUser", JSON.stringify(response));
+        localStorage.setItem(LS_USER, JSON.stringify(response));
         setIsAuth(true);
         navigate("/");
       }
@@ -64,7 +62,6 @@ const AuthorisationForm = ({ isSignUp }) => {
 
   return (
     <>
-      <S.GlobalStyle />
       <S.Wrapper>
         <S.Container>
           <S.Modal>
@@ -75,6 +72,7 @@ const AuthorisationForm = ({ isSignUp }) => {
               <S.ModalForm id="formLogUp" action="#">
                 {isSignUp && (
                   <S.ModalInput
+                    $error={errors.name}
                     type="text"
                     name="name"
                     id="form-name"
@@ -83,6 +81,7 @@ const AuthorisationForm = ({ isSignUp }) => {
                   />
                 )}
                 <S.ModalInput
+                  $error={errors.login}
                   type="text"
                   name="login"
                   id="form-login"
@@ -90,12 +89,22 @@ const AuthorisationForm = ({ isSignUp }) => {
                   onChange={inputChange}
                 />
                 <S.ModalInput
+                  $error={errors.password}
                   type="password"
                   name="password"
                   id="form-password"
                   placeholder="Пароль"
                   onChange={inputChange}
                 />
+
+                {error ? (
+                  <S.ErrorContainer>
+                    <p>Введенные вами данные некорректны. {error}</p>
+                  </S.ErrorContainer>
+                ) : (
+                  ""
+                )}
+
                 <S.ModalButton onClick={submitButton} id="form-button">
                   <a href="../main.html">
                     {isSignUp ? "Зарегистрироваться" : "Войти"}
