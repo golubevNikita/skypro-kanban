@@ -3,7 +3,9 @@ import styled from "styled-components";
 export const StyledHeader = styled.header`
   width: 100%;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: ${function ({ theme }) {
+    return theme.secondaryBackground;
+  }};
 `;
 
 export const HeaderContainer = styled.div`
@@ -73,7 +75,10 @@ export const HeaderUser = styled.a`
   justify-content: center;
   font-size: 14px;
   line-height: 20px;
-  color: #565eef;
+  font-weight: 500;
+  color: ${function ({ theme }) {
+    return theme.user.textColor;
+  }};
 
   &:hover {
     color: #33399b;
@@ -90,8 +95,12 @@ export const HeaderUser = styled.a`
     width: 6px;
     height: 6px;
     border-radius: 1px;
-    border-left: 1.9px solid #565eef;
-    border-bottom: 1.9px solid #565eef;
+    border-left: 1.9px solid ${function ({ theme }) {
+        return theme.user.textColor;
+      }};
+    border-bottom: 1.9px solid ${function ({ theme }) {
+        return theme.user.textColor;
+      }};
     transform: rotate(-45deg);
     margin: -6px 0 0 5px;
     padding: 0;
@@ -105,9 +114,15 @@ export const HeaderUserPop = styled.div`
   width: 213px;
   height: 205px;
   border-radius: 10px;
-  border: 0.7px solid rgba(148, 166, 190, 0.4);
-  background: #fff;
-  box-shadow: 0px 10px 39px 0px rgba(26, 56, 101, 0.21);
+  border: 0.7px solid ${function ({ theme }) {
+      return theme.user.popBorder;
+    }};
+  background: ${function ({ theme }) {
+    return theme.user.popBackground;
+  }};
+  box-shadow: 0px 10px 39px 0px ${function ({ theme }) {
+      return theme.user.popBoxShadow;
+    }};
   padding: 34px;
   text-align: center;
   z-index: 2;
@@ -116,12 +131,14 @@ export const HeaderUserPop = styled.div`
     width: 72px;
     height: 30px;
     background: transparent;
-    color: #565eef;
     border-radius: 4px;
-    border: 1px solid #565eef;
+    border: 1px solid ${function ({ theme }) {
+        return theme.user.popButton;
+      }};
 
     &:hover {
       background-color: #33399b;
+      border-color: #33399b;
       color: #ffffff;
     }
 
@@ -130,7 +147,9 @@ export const HeaderUserPop = styled.div`
     }
 
     a {
-      color: #565eef;
+      color: ${function ({ theme }) {
+        return theme.user.popButton;
+      }};
     }
   }
 `;
@@ -142,7 +161,9 @@ export const HeaderUserClose = styled.a`
 `;
 
 export const HeaderUserName = styled.p`
-  color: #000;
+  color: ${function ({ theme }) {
+    return theme.textColor;
+  }};
   font-size: 14px;
   font-weight: 500;
   line-height: 21px;
@@ -165,7 +186,9 @@ export const HeaderUserTheme = styled.div`
   margin-bottom: 30px;
 
   p {
-    color: #000;
+    color: ${function ({ theme }) {
+      return theme.textColor;
+    }};
     font-size: 14px;
     line-height: 21px;
     letter-spacing: -0.14px;
@@ -176,7 +199,9 @@ export const HeaderUserTheme = styled.div`
     width: 24px;
     height: 13px;
     border-radius: 100px;
-    background: #eaeef6;
+    background: ${function ({ theme }) {
+      return theme.user.popCheckboxBackground;
+    }};
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -191,7 +216,9 @@ export const HeaderUserTheme = styled.div`
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    background-color: #94a6be;
+    background-color: ${function ({ theme }) {
+      return theme.user.popCheckbox;
+    }};
     transition: 0.5s;
   }
 
@@ -199,11 +226,3 @@ export const HeaderUserTheme = styled.div`
     left: 12px;
   }
 `;
-
-// background-color: ${function (props) {
-//   return props.$isred ? "red" : "white";
-// }};
-
-// export const ContainerRed = styled(Container)`
-//   font-size: 12px;
-// `;

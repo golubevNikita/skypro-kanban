@@ -5,18 +5,21 @@ import { TasksContext } from "./TasksContext";
 export const TasksProvider = ({ children }) => {
   const [cardList, setCardList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [taskLoading, setTaskLoading] = useState(false);
   const [error, setError] = useState("");
-  const [taskId, setTaskId] = useState("");
+  const [taskById, setTaskById] = useState({});
 
   const providedData = {
     cardList,
     setCardList,
     loading,
     setLoading,
+    taskLoading,
+    setTaskLoading,
     error,
     setError,
-    taskId,
-    setTaskId,
+    taskById,
+    setTaskById,
   };
 
   return (

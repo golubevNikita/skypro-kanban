@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { LS_USER } from "../../services/utilities";
 
 import { TasksContext } from "../../сontext/TasksContext";
 
@@ -8,18 +9,22 @@ import { getTask } from "../../services/tasksHandler";
 import * as S from "./CardsItem.styled";
 
 const CardsItem = ({ topic, title, date, descriprion }) => {
-  const { setError, setTaskId } = useContext(TasksContext);
-  const token = JSON.parse(localStorage.getItem("localUser")).token;
+  const { setError, setTaskLoading, setTaskById } = useContext(TasksContext);
+
+  const token = JSON.parse(localStorage.getItem(LS_USER))?.token;
   const navigate = useNavigate();
 
   const getTaskById = ({ taskId, token }) => {
+    setTaskLoading(true);
     const data = getTask({ taskId, token });
 
     data.then((response) => {
       if (response.name === "AxiosError") {
         setError(response.response.data.error);
       } else {
-        setTaskId(response.data.task);
+        setTaskById(response.data.task);
+        navigate("/task-browse/" + taskId);
+        setTaskLoading(false);
       }
     });
   };
@@ -28,17 +33,18 @@ const CardsItem = ({ topic, title, date, descriprion }) => {
     <>
       <S.CardsContainer>
         <S.CardsGroup>
-          <S.CardsTheme color={topic}>
+          <S.CardsTheme $color={topic}>
             <p>{topic}</p>
           </S.CardsTheme>
           <a target="_self">
             <S.CardButton
               onClick={(event) => {
-                event.stopPropagation;
-                event.preventDefault;
+                event.stopPropagation();
+                event.preventDefault();
+
                 const taskId = event.currentTarget.closest("[id]").id;
+
                 getTaskById({ taskId, token });
-                navigate("/task-browse/" + taskId);
               }}
             >
               <div></div>

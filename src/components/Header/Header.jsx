@@ -1,24 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { LS_USER } from "../../services/utilities";
+
+import { ThemesContext } from "../../сontext/ThemesContext";
 
 import * as S from "./Header.styled";
 
 const Header = () => {
+  const { isDark, toggleTheme } = useContext(ThemesContext);
   const [userPopUpDisplay, setUserPopUpDisplay] = useState(false);
 
   const toggleUserPopUp = () => {
     setUserPopUpDisplay(!userPopUpDisplay);
   };
 
-  const [theme, setTheme] = useState("light");
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-
-  const userName = JSON.parse(localStorage.getItem("localUser")).name;
+  const userName = JSON.parse(localStorage.getItem(LS_USER)).name;
   const userMail =
-    JSON.parse(localStorage.getItem("localUser")).login + "@gmail.com";
+    JSON.parse(localStorage.getItem(LS_USER)).login + "@gmail.com";
 
   return (
     <>
@@ -28,11 +26,7 @@ const Header = () => {
             <S.HeaderLogo>
               <Link to={"/"} target="_self">
                 <img
-                  src={`${
-                    theme === "dark"
-                      ? "images/logo_dark.png"
-                      : "images/logo.png"
-                  }`}
+                  src={`${isDark ? "images/logo_dark.png" : "images/logo.png"}`}
                   alt="logo"
                 />
               </Link>
@@ -52,7 +46,7 @@ const Header = () => {
                   <S.HeaderUserName>{userName}</S.HeaderUserName>
                   <S.HeaderUserMail>{userMail}</S.HeaderUserMail>
                   <S.HeaderUserTheme>
-                    <p>{theme === "light" ? "Светлая тема" : "Тёмная тема"}</p>
+                    <p>{isDark ? "Тёмная тема" : "Светлая тема"}</p>
                     <input
                       onChange={toggleTheme}
                       type="checkbox"

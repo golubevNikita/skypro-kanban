@@ -1,22 +1,26 @@
-export function colorDefiner(color) {
+export function colorDefiner(color, theme) {
   switch (color) {
     case "Web Design":
-      return "#ff6d00";
+      return theme.categories.orangeText;
+
     case "Research":
-      return "#06b16e";
+      return theme.categories.greenText;
+
     case "Copywriting":
-      return "#9a48f1";
+      return theme.categories.purpleText;
   }
 }
 
-export function backgroundColorDefiner(color) {
+export function backgroundColorDefiner(color, theme) {
   switch (color) {
     case "Web Design":
-      return "#ffe4c2";
+      return theme.categories.orangeBackground;
+
     case "Research":
-      return "#b4fdd1";
+      return theme.categories.greenBackground;
+
     case "Copywriting":
-      return "#e9d4ff";
+      return theme.categories.purpleBackground;
   }
 }
 
@@ -85,3 +89,17 @@ export function correctedData(dataString = new Date()) {
 
   return correctedDate;
 }
+
+export const statusData = [
+  "Без статуса",
+  "Нужно сделать",
+  "В работе",
+  "Тестирование",
+  "Готово",
+];
+
+export const categoriesData = ["Web Design", "Research", "Copywriting"];
+
+export const LS_USER = "localUser";
+
+export const LS_APP_THEME = "usingTheme";

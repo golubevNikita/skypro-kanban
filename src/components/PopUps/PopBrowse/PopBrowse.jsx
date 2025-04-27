@@ -4,42 +4,37 @@ import { useNavigate } from "react-router-dom";
 import { TasksContext } from "../../../сontext/TasksContext";
 
 import { taskDelete, taskChange } from "../../../services/tasksHandler";
-import { correctedData } from "../../../services/utilities";
+import {
+  LS_USER,
+  statusData,
+  categoriesData,
+} from "../../../services/utilities";
 
 import Calendar from "../../Calendar/Calendar";
 
 import * as S from "./PopBrowse.styled";
 
 const PopBrowse = () => {
-  const { setCardList, taskId } = useContext(TasksContext);
-  const token = JSON.parse(localStorage.getItem("localUser")).token;
+  const { setCardList, taskById, setTaskById } = useContext(TasksContext);
+  const token = JSON.parse(localStorage.getItem(LS_USER))?.token;
 
   const navigate = useNavigate();
 
   const [isRedacted, setRedacted] = useState(true);
-  const [defaultTextAreaValue, setDefaultTextAreaValue] = useState(
-    taskId.description
-  );
-
-  useEffect(() => {
-    setDefaultTextAreaValue(taskId.description);
-  }, [taskId]);
-
-  const [taskInfo, setTaskInfo] = useState({ ...taskId });
 
   const toggleRedacted = () => {
     setRedacted(!isRedacted);
   };
 
-  function statusChangeByClick(event) {
-    event.stopPropagation;
-    event.preventDefault;
+  const [defaultTextAreaValue, setDefaultTextAreaValue] = useState(
+    taskById.description
+  );
 
-    setTaskInfo({
-      ...taskInfo,
-      status: event.currentTarget.children[0].textContent,
-    });
-  }
+  useEffect(() => {
+    setDefaultTextAreaValue(taskById.description);
+  }, [taskById]);
+
+  const [taskInfo, setTaskInfo] = useState({ ...taskById });
 
   function descriptionChange(event) {
     event.stopPropagation;
@@ -50,138 +45,81 @@ const PopBrowse = () => {
     setTaskInfo({ ...taskInfo, [event.target.name]: event.target.value });
   }
 
-  function topicChange(event) {
-    event.stopPropagation;
-    event.preventDefault;
+  const [activeStatus, setActiveStatus] = useState(taskById.status);
+  const [activeCategory, setActiveCategory] = useState(taskById.topic);
 
-    setTaskInfo({
-      ...taskInfo,
-      topic: event.currentTarget.children[0].textContent,
-    });
+  function changeData(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    const changedData = event.currentTarget.children[0].textContent;
+
+    if (event.currentTarget.getAttribute("name") === "status") {
+      const status = changedData;
+
+      setActiveStatus(status);
+
+      setTaskInfo({
+        ...taskInfo,
+        status,
+      });
+    } else {
+      const topic = changedData;
+
+      setActiveCategory(topic);
+
+      setTaskInfo({
+        ...taskInfo,
+        topic,
+      });
+    }
   }
 
-  useEffect(() => {
-    const statusies = document.querySelectorAll(".status__theme");
+  const [deadline, setDeadline] = useState(taskById.date);
 
-    for (const statusEl of statusies) {
-      statusEl.addEventListener("click", () => {
-        statusies.forEach((el) => {
-          el.childNodes[0].classList.remove("_gray");
-          el.classList.remove("_gray");
-        });
-
-        statusEl.childNodes[0].classList.add("_gray");
-        statusEl.classList.add("_gray");
-      });
-    }
-
-    const categories = document.querySelectorAll(".categories__theme");
-
-    for (const categoryEl of categories) {
-      categoryEl.addEventListener("click", () => {
-        categories.forEach((el) => {
-          el.classList.remove("_active-category");
-        });
-
-        categoryEl.classList.add("_active-category");
-      });
-    }
-  }, [isRedacted]);
+  const handleSelect = (newSelected) => {
+    setRedacted(false);
+    setDeadline(newSelected);
+    setTaskInfo({ ...taskInfo, date: new Date(newSelected).toJSON() });
+  };
 
   return (
     <S.BrowsePopUp id="popBrowse">
-      <div className="pop-browse__container">
-        <div className="pop-browse__block">
-          <div className="pop-browse__content">
-            <div className="pop-browse__top-block">
-              <h3 className="pop-browse__ttl">{taskId.title}</h3>
-              <S.CategoriesTheme $color={taskId.topic} $isactive={taskId.topic}>
-                <p>{taskId.topic}</p>
+      <S.PopBrowseContainer>
+        <S.PopBrowseBlock>
+          <S.PopBrowseContent>
+            <S.PopBrowseTopBlock>
+              <S.PopBrowseTtl>{taskById.title}</S.PopBrowseTtl>
+              <S.CategoriesTheme
+                $color={taskById.topic}
+                $isactive={taskById.topic}
+              >
+                <p>{taskById.topic}</p>
               </S.CategoriesTheme>
-            </div>
+            </S.PopBrowseTopBlock>
             <div className="pop-browse__status status">
               <p className="status__p subttl">Статус</p>
 
               <div className="status__themes">
                 {isRedacted ? (
-                  <S.StatusTheme $color={"gray"}>
-                    <p>{taskId.status}</p>
+                  <S.StatusTheme $isactive={true}>
+                    <p>{taskById.status}</p>
                   </S.StatusTheme>
                 ) : (
                   <>
-                    <div
-                      onClick={statusChangeByClick}
-                      name="status"
-                      className={`status__theme ${
-                        taskId.status === "Без статуса" ? "_gray" : ""
-                      }`}
-                    >
-                      <p
-                        className={
-                          taskId.status === "Без статуса" ? "_gray" : ""
-                        }
-                      >
-                        Без статуса
-                      </p>
-                    </div>
-
-                    <div
-                      onClick={statusChangeByClick}
-                      name="status"
-                      className={`status__theme ${
-                        taskId.status === "Нужно сделать" ? "_gray" : ""
-                      }`}
-                    >
-                      <p
-                        className={
-                          taskId.status === "Нужно сделать" ? "_gray" : ""
-                        }
-                      >
-                        Нужно сделать
-                      </p>
-                    </div>
-
-                    <div
-                      onClick={statusChangeByClick}
-                      name="status"
-                      className={`status__theme ${
-                        taskId.status === "В работе" ? "_gray" : ""
-                      }`}
-                    >
-                      <p
-                        className={taskId.status === "В работе" ? "_gray" : ""}
-                      >
-                        В работе
-                      </p>
-                    </div>
-
-                    <div
-                      onClick={statusChangeByClick}
-                      name="status"
-                      className={`status__theme ${
-                        taskId.status === "Тестирование" ? "_gray" : ""
-                      }`}
-                    >
-                      <p
-                        className={
-                          taskId.status === "Тестирование" ? "_gray" : ""
-                        }
-                      >
-                        Тестирование
-                      </p>
-                    </div>
-
-                    <div
-                      onClick={statusChangeByClick}
-                      name="status"
-                      className={`status__theme ${
-                        taskId.status === "Готово" ? "_gray" : ""
-                      }`}
-                    >
-                      <p className={taskId.status === "Готово" ? "_gray" : ""}>
-                        Готово
-                      </p>
-                    </div>
+                    {statusData.map((el, index) => {
+                      return (
+                        <S.StatusTheme
+                          $isactive={activeStatus === el}
+                          $color={el}
+                          key={index}
+                          name="status"
+                          onClick={changeData}
+                        >
+                          <p>{el}</p>
+                        </S.StatusTheme>
+                      );
+                    })}
                   </>
                 )}
               </div>
@@ -196,157 +134,142 @@ const PopBrowse = () => {
                   <label htmlFor="textArea01" className="subttl">
                     Описание задачи
                   </label>
-                  <textarea
+                  <S.FormBrowseArea
+                    $isRedacted={isRedacted}
                     value={defaultTextAreaValue}
                     onChange={descriptionChange}
-                    className="form-browse__area"
                     name="description"
                     id="textArea01"
                     placeholder="Введите описание задачи..."
-                  ></textarea>
+                  ></S.FormBrowseArea>
                 </div>
               </form>
 
-              <Calendar date={correctedData(taskId.date)} />
+              <Calendar
+                isNewTask={false}
+                deadline={deadline}
+                handleSelect={handleSelect}
+              />
             </div>
 
             {isRedacted ? (
               ""
             ) : (
-              <div className="theme-down__categories theme-down">
+              <S.ThemeDown>
                 <p className="categories__p subttl">Категория</p>
-
-                <div
-                  onClick={topicChange}
-                  name="topic"
-                  className={`categories__theme _orange ${
-                    taskId.topic === "Web Design" ? "_active-category" : ""
-                  }`}
-                >
-                  <p className="_orange">Web Design</p>
-                </div>
-
-                <div
-                  onClick={topicChange}
-                  name="topic"
-                  className={`categories__theme _green ${
-                    taskId.topic === "Research" ? "_active-category" : ""
-                  }`}
-                >
-                  <p className="_green">Research</p>
-                </div>
-
-                <div
-                  onClick={topicChange}
-                  name="topic"
-                  className={`categories__theme _purple ${
-                    taskId.topic === "Copywriting" ? "_active-category" : ""
-                  }`}
-                >
-                  <p className="_purple">Copywriting</p>
-                </div>
-              </div>
+                {categoriesData.map((el, index) => {
+                  return (
+                    <S.CategoriesTheme
+                      $isactive={activeCategory === el}
+                      $color={el}
+                      key={index}
+                      name="topic"
+                      onClick={changeData}
+                    >
+                      <p>{el}</p>
+                    </S.CategoriesTheme>
+                  );
+                })}
+              </S.ThemeDown>
             )}
 
             {isRedacted ? (
               <div className="pop-browse__btn-browse ">
                 <div className="btn-group">
-                  <button
+                  <S.BtnBor
                     onClick={() => {
                       toggleRedacted();
                     }}
-                    className="btn-browse__edit _btn-bor _hover03"
                   >
                     <a>Редактировать задачу</a>
-                  </button>
-                  <button
-                    className="btn-browse__delete _btn-bor _hover03"
+                  </S.BtnBor>
+                  <S.BtnBor
                     onClick={(event) => {
                       event.stopPropagation;
                       event.preventDefault;
-                      const deletedTaskId = taskId["_id"];
+                      const deletedTaskId = taskById["_id"];
 
                       taskDelete({ deletedTaskId, token }).then((response) => {
                         setCardList(response.data.tasks);
+                        setTaskById({});
                         navigate("/");
                       });
                     }}
                   >
                     <a>Удалить задачу</a>
-                  </button>
+                  </S.BtnBor>
                 </div>
-                <button
+                <S.BtnBg
                   onClick={() => {
-                    setDefaultTextAreaValue(taskId.description);
+                    setDefaultTextAreaValue(taskById.description);
+                    setTaskById({});
                     navigate("/");
                   }}
-                  className="btn-browse__close _btn-bg _hover01"
                 >
                   <a>Закрыть</a>
-                </button>
+                </S.BtnBg>
               </div>
             ) : (
               <div className="pop-browse__btn-edit">
                 <div className="btn-group">
-                  <button
+                  <S.BtnBg
                     onClick={() => {
-                      const changedTaskId = taskId["_id"];
-                      const newData = { ...taskId, ...taskInfo };
+                      const changedTaskId = taskById["_id"];
+                      const newData = { ...taskById, ...taskInfo };
 
                       taskChange({ changedTaskId, newData, token }).then(
                         (response) => {
                           setCardList(response.data.tasks);
                           toggleRedacted();
+                          setTaskById({});
                           navigate("/");
                         }
                       );
                     }}
-                    className="btn-edit__edit _btn-bg _hover01"
                   >
                     <a>Сохранить</a>
-                  </button>
-                  <button
+                  </S.BtnBg>
+                  <S.BtnBor
                     onClick={() => {
-                      setTaskInfo({ ...taskId });
-                      setDefaultTextAreaValue(taskId.description);
+                      setTaskInfo({ ...taskById });
+                      setDefaultTextAreaValue(taskById.description);
                       toggleRedacted();
                     }}
-                    className="btn-edit__edit _btn-bor _hover03"
                   >
                     <a>Отменить</a>
-                  </button>
-                  <button
-                    className="btn-edit__delete _btn-bor _hover03"
+                  </S.BtnBor>
+                  <S.BtnBor
                     id="btnDelete"
                     onClick={(event) => {
                       event.stopPropagation;
                       event.preventDefault;
-                      const deletedTaskId = taskId["_id"];
+                      const deletedTaskId = taskById["_id"];
 
                       taskDelete({ deletedTaskId, token }).then((response) => {
                         setCardList(response.data.tasks);
+                        setTaskById({});
                         navigate("/");
                       });
                     }}
                   >
                     <a>Удалить задачу</a>
-                  </button>
+                  </S.BtnBor>
                 </div>
-                <button
+                <S.BtnBg
                   onClick={() => {
-                    setTaskInfo({ ...taskId });
+                    setTaskInfo({ ...taskById });
+                    setTaskById({});
                     toggleRedacted();
                     navigate("/");
                   }}
-                  className="btn-edit__close _btn-bg _hover01"
                 >
                   <a>Закрыть</a>
-                </button>
+                </S.BtnBg>
               </div>
             )}
-          </div>
-        </div>
-      </div>
+          </S.PopBrowseContent>
+        </S.PopBrowseBlock>
+      </S.PopBrowseContainer>
     </S.BrowsePopUp>
   );
 };
