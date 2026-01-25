@@ -218,10 +218,6 @@ export const CategoriesTheme = styled.div`
     return colorDefiner($color, theme);
   }};
 
-  /* @media screen and (max-width: 495px) {
-    display: none;
-  } */
-
   p {
     font-size: 14px;
     font-weight: 600;

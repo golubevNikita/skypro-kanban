@@ -2,8 +2,6 @@ import { createGlobalStyle, styled } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   #root {
-    /* max-width: 1280px;
-    padding: 2rem; */
     margin: 0 auto;
     text-align: center;
   }
@@ -54,7 +52,6 @@ export const GlobalStyle = createGlobalStyle`
     color: ${function ({ theme }) {
       return theme.textColor;
     }};
-    /* overflow: hidden */
   }
 `;
 

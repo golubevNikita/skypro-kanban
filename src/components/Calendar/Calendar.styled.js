@@ -59,11 +59,6 @@ export const CalendarP = styled.p`
 `;
 
 export const Calendar = styled(DayPicker)`
-  /* Почему то стили для root не задаются скобка грусти( */
-  /* .rdp-root {
-    margin-bottom: 12px;
-  } */
-
   .rdp-months {
     margin-bottom: 12px;
     width: 168px;

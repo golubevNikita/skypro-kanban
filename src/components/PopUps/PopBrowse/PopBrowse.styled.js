@@ -102,10 +102,6 @@ export const CategoriesTheme = styled.div`
     return colorDefiner($color, theme);
   }};
 
-  /* @media screen and (max-width: 495px) {
-    display: none;
-  } */
-
   p {
     font-size: 14px;
     font-weight: 600;
@@ -188,7 +184,6 @@ export const FormBrowseArea = styled.textarea`
 `;
 
 export const ThemeDown = styled.div`
-  /* display: none; */
   margin-bottom: 20px;
 
   @media screen and (max-width: 495px) {
@@ -210,7 +205,6 @@ export const BtnBor = styled.button`
   border: 0.7px solid ${function ({ theme }) {
       return theme.buttonBorderColor;
     }};
-  /* var(--palette-navy-60, #565eef); */
   outline: none;
   background: transparent;
   color: ${function ({ theme }) {

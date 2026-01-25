@@ -1,11 +1,9 @@
 import { styled } from "styled-components";
 
-// Оставил с целью сохранить исходную разметку
 export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  /* overflow-x: hidden;
-  overflow-y: scroll; */
+
   background-color: ${function ({ theme }) {
     return theme.primaryBackground;
   }};
@@ -14,9 +12,6 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  /* overflow-x: hidden;
-  overflow-y: scroll;
-  background-color: #eaeef6; */
 `;
 
 export const Modal = styled.div`
@@ -71,11 +66,6 @@ export const ModalTitle = styled.div`
     max-width: 368px;
     width: 100%;
 
-    /* padding: 50px 60px;
-    border-radius: 10px;
-    border: 0.7px solid #d4dbe5;
-    box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13); */
-
     margin-bottom: 20px;
   }
 `;
@@ -86,10 +76,6 @@ export const ModalForm = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  /* input:first-child {
-    margin-bottom: 7px;
-  } */
 
   input:not(:last-child) {
     margin-bottom: 7px;

@@ -18,10 +18,7 @@ const PopNewCard = () => {
 
   const [newTaskInfo, setNewTaskInfo] = useState({
     title: "",
-    // topic: "",
-    // status: "",
     description: "",
-    // date: "",
   });
 
   const [errors, setErrors] = useState({

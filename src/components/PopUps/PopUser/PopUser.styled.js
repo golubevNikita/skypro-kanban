@@ -102,7 +102,6 @@ export const PopExitNo = styled.button`
       return theme.buttonBorderColor;
     }};
 
-  /* var(--palette-navy-60, #565eef); */
   outline: none;
   display: flex;
   align-items: center;

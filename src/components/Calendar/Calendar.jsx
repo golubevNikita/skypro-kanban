@@ -12,7 +12,6 @@ const Calendar = ({ isNewTask, deadline, newTaskDateSelect, handleSelect }) => {
   const { taskById } = useContext(TasksContext);
 
   useEffect(() => {
-    // Сброс установленных в react day picker инлайновых размеров стрелок
     const monthsNavigate = document.querySelectorAll(".rdp-chevron");
 
     monthsNavigate.forEach((el) => {
@@ -20,7 +19,6 @@ const Calendar = ({ isNewTask, deadline, newTaskDateSelect, handleSelect }) => {
       el.removeAttribute("height");
     });
 
-    // Попытка сделать название месяца с большой буквы
     const monthsName = document.querySelector(".rdp-caption_label").textContent;
 
     const monthsByCapital = monthsName.replace(
