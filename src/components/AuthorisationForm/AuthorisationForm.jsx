@@ -106,9 +106,9 @@ const AuthorisationForm = ({ isSignUp }) => {
                 )}
 
                 <S.ModalButton onClick={submitButton} id="form-button">
-                  <a href="../main.html">
-                    {isSignUp ? "Зарегистрироваться" : "Войти"}
-                  </a>
+                  {/* <a href="../main.html"> */}
+                  {isSignUp ? "Зарегистрироваться" : "Войти"}
+                  {/* </a> */}
                 </S.ModalButton>
                 <S.ModalFormFooter className="modal__form-group">
                   <p>
